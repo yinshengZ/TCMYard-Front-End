@@ -19,7 +19,8 @@
         <el-form-item label="Gender" prop="gender_id">
 
           <el-select v-model="patient_info.gender_id">
-            <el-option v-for="genders in gender_rtv" :key="genders.id" :label="genders.gender" :value="genders.id" class="capitalize" />
+            <el-option v-for="genders in gender_rtv" :key="genders.id" :label="genders.gender" :value="genders.id"
+              class="capitalize" />
           </el-select>
 
           <el-tooltip content="Add New Genders" placement="top">
@@ -31,12 +32,8 @@
         </el-form-item>
 
         <el-form-item label="Date of Birth" prop="date_of_birth">
-          <el-date-picker
-            v-model="patient_info.date_of_birth"
-            type="date"
-            format="yyyy/MM/dd"
-            value-format="yyyy/MM/dd"
-          />
+          <el-date-picker v-model="patient_info.date_of_birth" type="date" format="yyyy/MM/dd"
+            value-format="yyyy/MM/dd" />
         </el-form-item>
 
         <el-form-item label="Postcode" prop="postcode">
@@ -54,13 +51,8 @@
         <el-form-item label="Marital Status" prop="marital_status_id">
 
           <el-select v-model="patient_info.marital_status_id">
-            <el-option
-              v-for="marital in marital_rtv"
-              :key="marital.id"
-              :label="marital.marital_status"
-              :value="marital.id"
-              class="capitalize"
-            />
+            <el-option v-for="marital in marital_rtv" :key="marital.id" :label="marital.marital_status"
+              :value="marital.id" class="capitalize" />
           </el-select>
 
           <el-tooltip content="Add New Marital Status" placement="top">
@@ -90,13 +82,8 @@
         <el-form-item label="Allergies" prop="allergies">
 
           <el-select v-model="patient_info.allergies" multiple filterable>
-            <el-option
-              v-for="allergy in allergies_rtv"
-              :key="allergy.id"
-              :label="allergy.allergies"
-              :value="allergy.id"
-              class="capitalize"
-            />
+            <el-option v-for="allergy in allergies_rtv" :key="allergy.id" :label="allergy.allergies" :value="allergy.id"
+              class="capitalize" />
           </el-select>
 
           <el-tooltip content="Add New Allergies" placement="top">
@@ -110,7 +97,8 @@
         <el-form-item label="Symptoms" prop="symptoms">
 
           <el-select v-model="patient_info.symptoms" multiple filterable>
-            <el-option v-for="symptom in symptoms_rtv" :key="symptom.id" :label="symptom.symptom" :value="symptom.id" class="capitalize" />
+            <el-option v-for="symptom in symptoms_rtv" :key="symptom.id" :label="symptom.symptom" :value="symptom.id"
+              class="capitalize" />
           </el-select>
 
           <el-tooltip content="Add New Symptoms" placement="top">
@@ -124,13 +112,8 @@
         <el-form-item label="Medications" prop="current_medication">
 
           <el-select v-model="patient_info.current_medication" multiple filterable>
-            <el-option
-              v-for="medication in medications"
-              :key="medication.id"
-              :label="medication.medication"
-              :value="medication.id"
-              class="capitalize"
-            />
+            <el-option v-for="medication in medications" :key="medication.id" :label="medication.medication"
+              :value="medication.id" class="capitalize" />
           </el-select>
 
           <el-tooltip content="Add New Medications" placement="top">
@@ -143,7 +126,8 @@
         <el-form-item label="Diseases">
 
           <el-select v-model="patient_info.diseases" multiple filterable>
-            <el-option v-for="disease in diseases" :key="disease.id" :label="disease.disease" :value="disease.id" class="capitalize" />
+            <el-option v-for="disease in diseases" :key="disease.id" :label="disease.disease" :value="disease.id"
+              class="capitalize" />
           </el-select>
 
           <el-tooltip content="Add New Diseases" placement="top">
@@ -152,12 +136,7 @@
 
         </el-form-item>
         <el-form-item label="Date Joined" prop="date_joined">
-          <el-date-picker
-            v-model="patient_info.date_joined"
-            type="date"
-            format="yyyy/MM/dd"
-            value-format="yyyy/MM/dd"
-          />
+          <el-date-picker v-model="patient_info.date_joined" type="date" format="yyyy/MM/dd" value-format="yyyy/MM/dd" />
         </el-form-item>
 
         <el-row>
@@ -242,7 +221,8 @@ export default {
         current_medication: [],
         allergies: [],
         symptoms: [],
-        diseases: []
+        diseases: [],
+        date_joined: '',
       },
       allergies: [],
       symptoms: [],
@@ -336,23 +316,23 @@ export default {
       })
       this.add_diseases_loaded = false
     },
-    load_gender: function() {
+    load_gender: function () {
       this.add_genders_loaded = true
     },
-    load_marital: function() {
+    load_marital: function () {
       this.add_marital_loaded = true
     },
-    load_allergy: function() {
+    load_allergy: function () {
       this.add_allergy_loaded = true
     },
-    load_symptom: function() {
+    load_symptom: function () {
       this.add_symptom_loaded = true
     },
-    load_medication: function() {
+    load_medication: function () {
       this.add_medications_loaded = true
       this.key++
     },
-    load_disease: function() {
+    load_disease: function () {
       this.add_diseases_loaded = true
       this.key++
     }
@@ -374,7 +354,8 @@ export default {
 .add-button {
   margin-left: 1%;
 }
-.capitalize{
+
+.capitalize {
   text-transform: capitalize;
 }
 </style>

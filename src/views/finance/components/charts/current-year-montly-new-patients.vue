@@ -3,7 +3,7 @@
     <!--  <div class="button">
             <button @click="get_monthly_patients"><svg-icon icon-class="refresh"></svg-icon></button>
         </div> -->
-    <div ref="chart" class="chart" />
+    <div ref="chart" v-html="no_data" class="chart" />
   </div>
 </template>
 
@@ -20,7 +20,8 @@ export default {
       chart: null,
       chart_data: [],
       xAxis: [],
-      yAxis: []
+      yAxis: [],
+      no_data: '',
     }
   },
   mounted() {
@@ -36,12 +37,18 @@ export default {
   methods: {
     get_monthly_patients() {
       getCurrentYearMonthlyNewPatients().then((response) => {
-        response.data.forEach((data, index) => {
-          this.xAxis[index] = data.date
-          this.yAxis[index] = data.count
-        })
+        if (Array.isArray(response.data)) {
+          console.log("is array!")
+          response.data.forEach((data, index) => {
+            this.xAxis[index] = data.date
+            this.yAxis[index] = data.count
+          })
 
-        this.initChart()
+          this.initChart()
+        } else {
+          this.no_data = "<h1>" + response.data + "</h1>"
+        }
+
       })
     },
 
@@ -101,7 +108,7 @@ export default {
 
 <style scoped>
 .chart {
-    width: 100%;
-    height: 300px;
+  width: 100%;
+  height: 300px;
 }
 </style>

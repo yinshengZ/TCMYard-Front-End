@@ -10,11 +10,11 @@
                 </template>
             </el-table-column>
 
-            <el-table-column label="Name" prop="name">
+            <el-table-column label="Name" prop="name" width="120px">
 
             </el-table-column>
-            <el-table-column label="stock" prop="stock"></el-table-column>
-            <el-table-column label="Expiry">
+            <el-table-column label="stock" prop="stock" width="120px"></el-table-column>
+            <el-table-column label="Expiry" width="140px">
                 <template slot-scope="scope">
                     <div v-if="dayjs(scope.row.expiry_date).isBefore(dayjs(new Date()))">
 

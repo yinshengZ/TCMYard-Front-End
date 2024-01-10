@@ -140,7 +140,7 @@ export default {
             break
           case 'Clear':
             this.icon_class = 'sunny'
-            this.img_url = require('@/assets/images/sunny-1.jpg')
+            this.img_url = require('@/assets/images/sunny-3.jpg')
             break
           case 'Snow':
             this.icon_class = 'snowy'
@@ -192,7 +192,7 @@ export default {
             break
         }
         this.loading = false
-      }).catch(function(error) {
+      }).catch(function (error) {
         Message({
           message: error,
           type: 'error',

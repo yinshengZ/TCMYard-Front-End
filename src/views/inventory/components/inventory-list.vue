@@ -1,36 +1,21 @@
 <template>
   <div>
-    <el-card>
-      <div>
-        <el-button
-          type="primary"
-          @click="load_add_inventory_form"
-        >
-          New Item
-        </el-button>
-      </div>
 
-    </el-card>
+    <div>
+      <el-button type="primary" @click="load_add_inventory_form">
+        New Inventory
+      </el-button>
+    </div>
 
-    <el-dialog
-      title="Add New Inventory"
-      :visible.sync="add_inventory_form_visible"
-      :before-close="get_inventories"
-    >
-      <add-item
-        :key="key"
-      />
+    <!--  </el-card> -->
+
+    <el-dialog title="Add New Inventory" :visible.sync="add_inventory_form_visible" :before-close="get_inventories">
+      <add-item :key="key" />
     </el-dialog>
 
-    <el-dialog
-      title="Update Inventory Details"
-      :visible.sync="update_inventory_form_visible"
-      :before-close="get_inventories"
-    >
-      <update-inventory
-        :key="key"
-        :inventory_id="inventory_id"
-      />
+    <el-dialog title="Update Inventory Details" :visible.sync="update_inventory_form_visible"
+      :before-close="get_inventories">
+      <update-inventory :key="key" :inventory_id="inventory_id" />
     </el-dialog>
 
     <el-tabs type="border-card">
@@ -38,10 +23,7 @@
         <!--herbs data table-->
         <!--//.filter(data=>!search|| data.name.toLowerCase().includes(search.toLowerCase())||data.eng_name.toLowerCase().includes(search.toLowerCase()))" -->
         <span slot="label"><svg-icon icon-class="herb" /> Herbs</span>
-        <el-table
-          :data="paged_herbs"
-          style="width: 100%"
-        >
+        <el-table :data="paged_herbs" style="width: 100%">
           <el-table-column label="ID" width="50">
             <template slot-scope="{ row }">
               <span>{{ row.id }}</span>
@@ -66,11 +48,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column
-            label="Unit Price"
-            width="100"
-            align="center"
-          >
+          <el-table-column label="Unit Price" width="100" align="center">
             <template slot-scope="{row}">
               <span>
                 {{ row.unit_price }}
@@ -80,7 +58,7 @@
 
           <el-table-column label="Expiry Date" width="140">
             <template slot-scope="{ row }">
-              <span v-if="row.expiry_date==null">No Date Set</span>
+              <span v-if="row.expiry_date == null">No Date Set</span>
               <span v-else>{{ convert_date(row.expiry_date) }}</span>
             </template>
           </el-table-column>
@@ -101,11 +79,7 @@
 
           <el-table-column type="expand" align="right" label="Description" width="180">
             <template slot="header">
-              <el-input
-                v-model="search"
-                size="mini"
-                placeholder="Type to search.."
-              />
+              <el-input v-model="search" size="mini" placeholder="Type to search.." />
             </template>
             <template slot-scope="{ row }">
               <p><b>Description:</b></p>
@@ -115,23 +89,13 @@
 
         </el-table>
 
-        <el-pagination
-          background
-          layout="sizes,prev,pager,next"
-          :page-size="page_size"
-          :page-sizes="page_sizes"
-          :total="herbs.length"
-          @size-change="change_page_size"
-          @current-change="set_page"
-        />
+        <el-pagination background layout="sizes,prev,pager,next" :page-size="page_size" :page-sizes="page_sizes"
+          :total="herbs.length" @size-change="change_page_size" @current-change="set_page" />
       </el-tab-pane>
 
       <el-tab-pane>
         <span slot="label"><svg-icon icon-class="service_2" />Service</span>
-        <el-table
-          :data="paged_services"
-          style="width:100%"
-        >
+        <el-table :data="paged_services" style="width:100%">
 
           <el-table-column label="ID" width="50">
             <template slot-scope="{row}">
@@ -157,11 +121,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column
-            label="Unit Price"
-            width="100"
-            align="center"
-          >
+          <el-table-column label="Unit Price" width="100" align="center">
             <template slot-scope="{row}">
               <span>
                 {{ row.unit_price }}
@@ -171,7 +131,7 @@
 
           <el-table-column label="Expiry Date" width="140">
             <template slot-scope="{ row }">
-              <span v-if="row.expiry_date==null">No Date Set</span>
+              <span v-if="row.expiry_date == null">No Date Set</span>
               <span v-else>{{ convert_date(row.expiry_date) }}</span>
             </template>
           </el-table-column>
@@ -192,11 +152,7 @@
 
           <el-table-column type="expand" align="right" label="Description" width="180">
             <template slot="header">
-              <el-input
-                v-model="search"
-                size="mini"
-                placeholder="Type to search.."
-              />
+              <el-input v-model="search" size="mini" placeholder="Type to search.." />
             </template>
             <template slot-scope="{ row }">
               <p><b>Description:</b></p>
@@ -206,15 +162,8 @@
 
         </el-table>
 
-        <el-pagination
-          background
-          layout="sizes,prev,pager,next"
-          :page-size="page_size"
-          :page-sizes="page_sizes"
-          :total="services.length"
-          @size-change="change_page_size"
-          @current-change="set_page"
-        />
+        <el-pagination background layout="sizes,prev,pager,next" :page-size="page_size" :page-sizes="page_sizes"
+          :total="services.length" @size-change="change_page_size" @current-change="set_page" />
 
       </el-tab-pane>
 
@@ -222,10 +171,7 @@
       <el-tab-pane>
         <span slot="label"><svg-icon icon-class="retail" /> Retail</span>
 
-        <el-table
-          :data="paged_retails"
-          style="width: 100%"
-        >
+        <el-table :data="paged_retails" style="width: 100%">
 
           <el-table-column label="ID" width="50">
             <template slot-scope="{ row }">
@@ -251,11 +197,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column
-            label="Unit Price"
-            width="100"
-            align="center"
-          >
+          <el-table-column label="Unit Price" width="100" align="center">
             <template slot-scope="{row}">
               <span>
                 {{ row.unit_price }}
@@ -265,7 +207,7 @@
 
           <el-table-column label="Expiry Date" width="140">
             <template slot-scope="{ row }">
-              <span v-if="row.expiry_date==null">No Date Set</span>
+              <span v-if="row.expiry_date == null">No Date Set</span>
               <span v-else>{{ convert_date(row.expiry_date) }}</span>
             </template>
           </el-table-column>
@@ -286,11 +228,7 @@
 
           <el-table-column type="expand" align="right" label="Description" width="180">
             <template slot="header">
-              <el-input
-                v-model="search"
-                size="mini"
-                placeholder="Type to search.."
-              />
+              <el-input v-model="search" size="mini" placeholder="Type to search.." />
             </template>
             <template slot-scope="{ row }">
               <p><b>Description:</b></p>
@@ -300,25 +238,15 @@
 
         </el-table>
 
-        <el-pagination
-          background
-          layout="sizes,prev,pager,next"
-          :page-size="page_size"
-          :page-sizes="page_sizes"
-          :total="retails.length"
-          @size-change="change_page_size"
-          @current-change="set_page"
-        />
+        <el-pagination background layout="sizes,prev,pager,next" :page-size="page_size" :page-sizes="page_sizes"
+          :total="retails.length" @size-change="change_page_size" @current-change="set_page" />
       </el-tab-pane>
 
       <!--get all other products-->
       <el-tab-pane>
         <span slot="label"><svg-icon icon-class="product" /> Others</span>
 
-        <el-table
-          :data="paged_others"
-          style="width: 100%"
-        >
+        <el-table :data="paged_others" style="width: 100%">
 
           <el-table-column label="ID" width="50">
             <template slot-scope="{ row }">
@@ -344,11 +272,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column
-            label="Unit Price"
-            width="100"
-            align="center"
-          >
+          <el-table-column label="Unit Price" width="100" align="center">
             <template slot-scope="{row}">
               <span>
                 {{ row.unit_price }}
@@ -358,7 +282,7 @@
 
           <el-table-column label="Expiry Date" width="140">
             <template slot-scope="{ row }">
-              <span v-if="row.expiry_date==null">No Date Set</span>
+              <span v-if="row.expiry_date == null">No Date Set</span>
               <span v-else>{{ convert_date(row.expiry_date) }}</span>
             </template>
           </el-table-column>
@@ -379,11 +303,7 @@
 
           <el-table-column type="expand" align="right" label="Description" width="180">
             <template slot="header">
-              <el-input
-                v-model="search"
-                size="mini"
-                placeholder="Type to search.."
-              />
+              <el-input v-model="search" size="mini" placeholder="Type to search.." />
             </template>
             <template slot-scope="{ row }">
               <p><b>Description:</b></p>
@@ -393,15 +313,8 @@
 
         </el-table>
 
-        <el-pagination
-          background
-          layout="sizes,prev,pager,next"
-          :page-size="page_size"
-          :page-sizes="page_sizes"
-          :total="others.length"
-          @size-change="change_page_size"
-          @current-change="set_page"
-        />
+        <el-pagination background layout="sizes,prev,pager,next" :page-size="page_size" :page-sizes="page_sizes"
+          :total="others.length" @size-change="change_page_size" @current-change="set_page" />
 
       </el-tab-pane>
 
@@ -418,7 +331,7 @@ import UpdateInventory from './update-inventory-form'
 
 export default {
   filters: {
-    capitalize: function(value) {
+    capitalize: function (value) {
       if (!value) return ''
       value = value.toString()
       return value.charAt(0).toUpperCase() + value.slice(1)
@@ -439,7 +352,8 @@ export default {
       key: '',
       page_size: 10,
       page: 1,
-      page_sizes: [10, 15, 20, 50, 100]
+      page_sizes: [10, 15, 20, 50, 100],
+
     }
   },
 
@@ -475,7 +389,7 @@ export default {
       this.get_services()
       this.get_others()
       this.add_inventory_form_visible = false,
-      this.update_inventory_form_visible = false
+        this.update_inventory_form_visible = false
     },
 
     set_page(val) {
@@ -543,5 +457,4 @@ export default {
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

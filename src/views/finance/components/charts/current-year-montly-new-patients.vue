@@ -38,7 +38,7 @@ export default {
     get_monthly_patients() {
       getCurrentYearMonthlyNewPatients().then((response) => {
         if (Array.isArray(response.data)) {
-          console.log("is array!")
+
           response.data.forEach((data, index) => {
             this.xAxis[index] = data.date
             this.yAxis[index] = data.count

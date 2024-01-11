@@ -71,3 +71,17 @@ export function get_expirying() {
     method: "get",
   });
 }
+
+export function get_most_used() {
+  return request({
+    url: "/inventory/most_used",
+    method: "get",
+  });
+}
+
+export function get_most_quantity_used() {
+  return request({
+    url: "/inventory/most_quantity",
+    method: "get",
+  });
+}

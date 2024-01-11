@@ -12,6 +12,15 @@
         </el-card>
       </div>
 
+      <div>
+
+        <most-used></most-used>
+      </div>
+
+      <div>
+        <most-quantity-used></most-quantity-used>
+      </div>
+
 
     </div>
 
@@ -25,8 +34,10 @@
 
 import InventoryList from './components/inventory-list'
 import expiryingInventory from './components/expirying-inventory.vue';
+import mostUsed from './components/most-used.vue';
+import mostQuantityUsed from './components/most-quantity-used.vue';
 export default {
-  components: { InventoryList, expiryingInventory }
+  components: { InventoryList, expiryingInventory, mostUsed, mostQuantityUsed }
 }
 </script>
 

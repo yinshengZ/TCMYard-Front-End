@@ -85,3 +85,10 @@ export function get_most_quantity_used() {
     method: "get",
   });
 }
+
+export function get_lowest_stocks() {
+  return request({
+    url: "/inventory/lowest_stocks",
+    method: "get",
+  });
+}

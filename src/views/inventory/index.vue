@@ -21,6 +21,10 @@
         <most-quantity-used></most-quantity-used>
       </div>
 
+      <div>
+        <low-stock-inventories></low-stock-inventories>
+      </div>
+
 
     </div>
 
@@ -36,8 +40,9 @@ import InventoryList from './components/inventory-list'
 import expiryingInventory from './components/expirying-inventory.vue';
 import mostUsed from './components/most-used.vue';
 import mostQuantityUsed from './components/most-quantity-used.vue';
+import lowStockInventories from './components/low-stock-inventories.vue';
 export default {
-  components: { InventoryList, expiryingInventory, mostUsed, mostQuantityUsed }
+  components: { InventoryList, expiryingInventory, mostUsed, mostQuantityUsed, lowStockInventories }
 }
 </script>
 

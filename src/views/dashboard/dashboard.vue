@@ -1,15 +1,11 @@
 <template>
   <div class="dashboard-editor-container">
 
-    <el-card>
-      <forecast-card />
+    <div class="weather-container">
+      <weather-card />
+    </div>
 
-    </el-card>
     <div class="top-row">
-
-      <div class="weather-container">
-        <weather-card />
-      </div>
 
       <div class="todo-container">
         <to-do />
@@ -72,19 +68,16 @@ export default {
 
 <style lang="scss" scoped>
 .dashboard-editor-container {
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   padding: 32px;
   background-color: rgb(240, 242, 245);
   position: relative;
-  height: 100vh;
 
-  .top-row {
-    display: grid;
-    /* height: 300px; */
-    grid-template-columns: 1.5fr 0.5fr;
-    column-gap: 2%;
+
+  /*  .top-row {
+
     padding: 20px;
-  }
+  } */
 
   .chart-wrapper {
     background: #fff;
@@ -94,6 +87,7 @@ export default {
   }
 
   .bottom-row {
+
     margin-top: 32px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -108,8 +102,7 @@ export default {
       display: grid;
       padding: 10px 0px;
       grid-template-columns: 1fr;
-      grid-template-rows: 1fr 1fr;
-      row-gap: 1%;
+
 
     }
 

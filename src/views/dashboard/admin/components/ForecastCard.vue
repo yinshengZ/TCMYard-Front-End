@@ -1,57 +1,79 @@
 <template>
     <div>
 
-        <div class="forecast-accordion">
-            <ul>
-                <li v-for="weather_forecast in forecast_data">
-                    <div class="daily-forecast-cover">
-                        <div class="forecast-heading">
-                            <svg-icon icon-class="cloudy" />
-                            <span class="weather-heading">
-                                {{ weather_forecast[0].weather }}
-                            </span>
-                        </div>
-                        <div class="forecast-body">
-                            <span class="weather-temp">
-                                {{ weather_forecast[0].temp }}
-                            </span>
-                        </div>
-                        <div class="forecast-date">
-                            <span class="weather-date">
-                                {{ weather_forecast[0].date }}
-                            </span>
-                        </div>
-                    </div>
-                    <div class="hourly-forecast">
-                        <div v-for="weather in weather_forecast" class="hourly-details">
-                            <div class="hourly-heading">
-                                <svg-icon icon-class="cloudy" />
-                                <span class="hourly-heading">
-                                    {{ weather.weather }}
-                                </span>
-                            </div>
-                            <div class="hourly-body">
-                                <span class="hourly-temp">
-                                    {{ weather.temp }}
-                                </span>
-                                <span class="hourly-temp-max">
-                                    {{ weather.temp_max }}
-                                </span>
-                                <span class="hourly-temp-min">
-                                    {{ weather.temp_min }}
-                                </span>
-
-                                <span class="hourly-time">
-                                    {{ weather.hour }}
-                                </span>
-                            </div>
-                        </div>
-
-                    </div>
+        <div class="forecast">
 
 
-                </li>
-            </ul>
+            <div v-for="weather_forecast in forecast_data" class="forecast-container">
+
+                <div class="weather-icon" v-if="weather_forecast[0].weather == 'Clouds'">
+                    <svg-icon icon-class="cloudy" class="icon"></svg-icon>
+                </div>
+                <div class="weather-icon" v-else-if="weather_forecast[0].weather == 'Rain'">
+                    <svg-icon icon-class="rainy" class="icon"></svg-icon>
+                </div>
+                <div class="weather-icon" v-else-if="weather_forecast[0].weather == 'Clear'">
+                    <svg-icon icon-class="sunny" class="icon"></svg-icon>
+                </div>
+                <div class="weather-icon" v-else-if="weather_forecast[0].weather == 'Snow'">
+                    <svg-icon icon-class="snowy" class="icon"></svg-icon>
+                </div>
+                <div class="weather-icon" v-else-if="weather_forecast[0].weather == 'Fog'">
+                    <svg-icon icon-class="foggy" class="icon"></svg-icon>
+                </div>
+                <div class="weather-icon" v-else-if="weather_forecast[0].weather == 'Drizzle'">
+                    <svg-icon icon-class="rainy" class="icon"></svg-icon>
+                </div>
+                <div class="weather-icon" v-else-if="weather_forecast[0].weather == 'Mist'">
+                    <svg-icon icon-class="foggy" class="icon"></svg-icon>
+                </div>
+                <div class="weather-icon" v-else-if="weather_forecast[0].weather == 'Smoke'">
+                    <svg-icon icon-class="foggy" class="icon"></svg-icon>
+                </div>
+                <div class="weather-icon" v-else-if="weather_forecast[0].weather == 'Haze'">
+                    <svg-icon icon-class="haze" class="icon"></svg-icon>
+                </div>
+                <div class="weather-icon" v-else-if="weather_forecast[0].weather == 'Thunderstorm'">
+                    <svg-icon icon-class="thunder" class="icon"></svg-icon>
+                </div>
+                <div class="weather-icon" v-else-if="weather_forecast[0].weather == 'Dust'">
+                    <svg-icon icon-class="dust" class="icon"></svg-icon>
+                </div>
+                <div class="weather-icon" v-else-if="weather_forecast[0].weather == 'Sand'">
+                    <svg-icon icon-class="dust" class="icon"></svg-icon>
+                </div>
+                <div class="weather-icon" v-else-if="weather_forecast[0].weather == 'Squall'">
+                    <svg-icon icon-class="windy" class="icon"></svg-icon>
+                </div>
+                <div class="weather-icon" v-else-if="weather_forecast[0].weather == 'Tornado'">
+                    <svg-icon icon-class="tornado" class="icon"></svg-icon>
+                </div>
+
+                <div class="weather-icon" v-else>
+                    <svg-icon icon-class="sunny" class="icon"></svg-icon>
+                </div>
+
+                <div class="weather-heading">
+                    <span class="weather">
+                        {{ weather_forecast[0].weather }}
+                    </span>
+                </div>
+
+                <div class="weather-temp">
+                    <span class="temp">
+                        {{ weather_forecast[0].temp }} °C
+                    </span>
+                </div>
+
+                <div class="forecast-date">
+                    <span class="date">
+                        {{ weather_forecast[0].date }}
+                    </span>
+                </div>
+
+
+            </div>
+
 
         </div>
 
@@ -63,9 +85,10 @@
 import Axios from 'axios'
 
 export default {
+    props: ['lat', 'lon'],
     data() {
         return {
-            api_key: process.env.VUE_APP_OPENWEATHER_API_KEY,
+
             forecast: {},
             forecast_hourly: {
                 time: '',
@@ -78,21 +101,28 @@ export default {
             forecast_daily: [],
             forecast_data: [],
             img_url: '',
-            icon_url: ''
+            icon_url: '',
+            api_key: process.env.VUE_APP_OPENWEATHER_API_KEY,
+
         }
     },
-    created() {
+
+    mounted() {
         this.get_forecast()
     },
+
 
     methods: {
 
         get_forecast() {
             Axios({
                 method: 'get',
-                url: 'https://api.openweathermap.org/data/2.5/forecast?q=London&units=metric&cnt=40&APPID=' + this.api_key
+                url: 'https://api.openweathermap.org/data/2.5/forecast?lat='
+                    + this.lat + '&lon=' + this.lon + '&units=metric&cnt=40&appid='
+                    + this.api_key
 
             }).then((response) => {
+
                 this.forecast = response.data.list
 
                 const date = this.forecast[0].dt_txt.split(' ')
@@ -118,7 +148,8 @@ export default {
                         this.forecast_hourly = {}
 
                         this.forecast_hourly.weather = element.weather[0].main
-                        this.forecast_hourly.date = forecast_date[0]
+                        let splitted_date = forecast_date[0].split("-", 3)
+                        this.forecast_hourly.date = splitted_date[2] + '-' + splitted_date[1]
                         this.forecast_hourly.hour = forecast_date[1]
                         this.forecast_hourly.temp = Math.round(element.main.temp)
                         this.forecast_hourly.temp_min = Math.round(element.main.temp_min)
@@ -141,24 +172,108 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.forecast-accordion {
+.forecast {
+    border-radius: 10px;
+
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    column-gap: 2%;
+
+    .forecast-container {
+        margin-right: 10%;
+        background-color: rgba($color: #ffffff, $alpha: 0.2);
+        height: 100%;
+        border-radius: 10px;
+        position: relative;
+
+        .weather-icon {
+            padding: 10px;
+            /* display: flex;
+            justify-content: center; */
+            position: relative;
+            margin-left: auto;
+            margin-right: auto;
+            left: 0;
+            right: 0;
+            top: 5%;
+            text-align: center;
 
 
-    ul {
-        display: table;
-        table-layout: fixed;
 
-        li {
-            display: table-cell;
-            vertical-align: bottom;
-            width: 20%;
+            .icon {
+
+                color: white;
+
+                font-size: 4em;
+            }
         }
+
+        .weather-heading {
+            padding: 10px;
+
+
+            position: relative;
+            margin-left: auto;
+            margin-right: auto;
+            left: 0;
+            right: 0;
+            top: 2%;
+            text-align: center;
+
+            .weather {
+                display: flex;
+                justify-content: center;
+                font-size: 2em;
+                color: white;
+            }
+        }
+
+        .weather-temp {
+            padding: 10px;
+
+            position: relative;
+            margin-left: auto;
+            margin-right: auto;
+            left: 0;
+            right: 0;
+            top: 1%;
+            text-align: center;
+
+            .temp {
+                /*  display: flex;
+                justify-content: center; */
+                font-size: 2em;
+                color: white;
+
+            }
+        }
+
+        .forecast-date {
+            position: relative;
+            margin-left: auto;
+            margin-right: auto;
+            left: 0;
+            right: 0;
+            bottom: -3%;
+            text-align: center;
+
+            .date {
+                margin-top: 10%;
+                color: white;
+                font-size: 2em;
+            }
+        }
+
+
     }
+
 
 }
 
-.daily-forecast {
+.forecast-container:hover {
+    background-color: rgba($color: #d3d3d3, $alpha: 0.4);
 
-    border: solid;
 }
 </style>

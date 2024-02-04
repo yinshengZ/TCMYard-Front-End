@@ -2,15 +2,22 @@
   <div>
     <el-card v-loading="loading" class="weather-card" :body-style="{ padding: '0px' }">
 
-      <div class="weather-card">
+      {{ cities.name }}
+      <div class="weather-card" v-bind:style="{ backgroundImage: 'url(' + img_url + ')' }">
         <div class="top box-card-header">
 
-          <img :src="img_url" alt="" class="background-image">
+
           <div class="data-body">
 
             <div class="current-day">
-              <input v-model="city" type="text" class="city-search-form">
-              <button @click="get_cities">Get</button>
+              <div class="city-search-form">
+
+                <el-autocomplete class="inline-input" v-model="city" :fetch-suggestions="fetch_city_suggestions"
+                  placeholder="city" @select="handleSelect">
+
+                </el-autocomplete>
+              </div>
+
               <div class="city-title">
                 <span>{{ weather_data.name }}</span>
               </div>
@@ -21,9 +28,11 @@
 
               <div class="weather-condition">
                 <span>{{ weather_condition }}</span>
+
+
               </div>
-              <div class="weather-description">
-                <span>{{ weather_description }}</span>
+              <div>
+
               </div>
 
               <div class="temperature">
@@ -52,9 +61,7 @@
             </div>
 
             <div class="forecast">
-              <div v-for="forcast in this.forecast_data">
-                {{ forcast.dt_txt.split(" ") }}
-              </div>
+              <forecast-card class="forecast-card" :lat="this.lat" :lon="this.lon" :key="this.key"></forecast-card>
             </div>
 
           </div>
@@ -72,10 +79,15 @@ import axios from 'axios'
 
 import { Message } from 'element-ui'
 
+import ForecastCard from './ForecastCard.vue'
+
 export default {
+  components: {
+    ForecastCard
+  },
   data() {
     return {
-      api_key: '1f9d96b409e6b3d1f86d8468d20cc147',
+      api_key: process.env.VUE_APP_OPENWEATHER_API_KEY,
       api_url: 'https://api.openweathermap.org/data/2.5/weather?q=',
       api_forecast_url: 'https://api.openweathermap.org/data/2.5/forecast?q=',
       icon_class: '',
@@ -90,17 +102,33 @@ export default {
       temp: '',
       loading: false,
       cities: [],
+      forecast_data: [],
+      lat: 51.5073219,
+      lon: -0.1276474,
+      key: 0,
 
-      forecast_data: []
 
     }
   },
 
   mounted() {
     this.get_weathers()
-    /*  this.get_forecast() */
+  },
+
+  watch: {
+    city: function (val) {
+      this.get_cities(val)
+
+    }
+
   },
   methods: {
+
+    reload_weathers() {
+      this.get_weathers();
+      this.key += 1;
+    },
+
     get_cities() {
       this.loading = true
       axios({
@@ -108,17 +136,52 @@ export default {
         url: 'http://api.openweathermap.org/geo/1.0/direct?q=' + this.city + '&limit=5&appid=' + this.api_key
 
       }).then((response) => {
-        console.log(response)
         this.cities = response.data
+
         this.loading = false
       })
+      this.loading = false
     },
+
+    fetch_city_suggestions(input, cb) {
+
+      var city = {
+        value: '',
+        city: []
+      };
+
+      var data = [];
+      var cities = this.cities;
+      //el-autocomplete requires a value field in the data. re-construct the data aquired from cities api with value been assigned a string of name, state and country 
+      for (let i = 0; i < cities.length; i++) {
+        city.value = cities[i].name + '-' + cities[i].state + '-' + cities[i].country
+
+        //pushing the object into data array for el-autocomplete to use
+        data.push({
+          value: cities[i].name + '-' + cities[i].state + '-' + cities[i].country,
+          city: cities[i]
+        })
+      }
+
+      cb(data);
+    },
+
+
+    handleSelect(item) {
+      this.lat = item.city.lat
+      this.lon = item.city.lon
+      this.city = item.city.name
+      this.key += 1
+      this.get_weathers()
+    },
+
+
 
     get_weathers() {
       this.loading = true
       axios({
         method: 'get',
-        url: 'https://api.openweathermap.org/data/2.5/weather?q=London&units=metric&APPID=1f9d96b409e6b3d1f86d8468d20cc147'
+        url: 'https://api.openweathermap.org/data/2.5/weather?lat=' + this.lat + '&lon=' + this.lon + '&units=metric&APPID=' + this.api_key,
       }).then((response) => {
         this.weather_data = response.data
         this.weather = this.weather_data.weather
@@ -127,8 +190,8 @@ export default {
         this.temp = Math.round(this.weather_data.main.temp)
         this.temp_min = Math.round(this.weather_data.main.temp_min)
         this.temp_max = Math.round(this.weather_data.main.temp_max)
-        this.icon_url = this.icon_base_url + this.weather[0].icon + '@2x.png'
-
+        /*         this.icon_url = this.icon_base_url + this.weather[0].icon + '@2x.png'
+         */
         switch (this.weather_data.weather[0].main) {
           case 'Clouds':
             this.icon_class = 'cloudy'
@@ -206,117 +269,130 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.box-card-header {
+/* .box-card-header {
 
   position: relative;
 
   width: 100%;
   height: 300px;
 
-  .background-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+} */
 
-    transition: all 0.2s linear;
+.city-search-form {
+  display: flex;
+  justify-content: center;
 
-    &:hover {
-      transform: scale(1.1, 1.1);
-      filter: contrast(130%);
-    }
+
+  input:focus {
+    background: red;
+    line-height: 32px;
+
+    transition: 0.5s;
+    color: white;
+  }
+}
+
+.city-search-form:focus {
+  /*  height: 300px;
+  width: 500px;
+  transition: 3s; */
+
+  background: red;
+
+}
+
+.data-body {
+  /* position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 100%; */
+
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  display: grid;
+  grid-template-columns: 0.6fr 1.4fr;
+
+  span {
+    font-family: Helvetica, Arial, sans-serif;
   }
 
-  .city-search-form {
-    border: none;
-    border-radius: 50px 50px 50px 50px;
-    background-color: rgba($color: #f1f3f1, $alpha: 0.5);
-    height: 20px;
-    margin-left: 30%;
+  .city-title {
+    text-align: center;
+    font-size: 3em;
+    font-weight: 300;
+    color: aliceblue;
   }
 
-  .city-search-form:focus {
-    /*  background-color: rgba($color: #ffffff, $alpha: 1.0);
-    height: 80px; */
-    display: absolute;
+  .weather-icon {
+    text-align: center;
+    font-size: 4em;
+    margin-bottom: 2%;
+    margin-top: -2%;
+    color: white;
   }
 
-  .data-body {
-    position: absolute;
-    top: 0%;
-    left: 0%;
-    width: 100%;
-    height: 300px;
-    background: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-
-    .span {
-      font-family: "Roboto";
-    }
-
-    .city-title {
-      text-align: center;
-      font-size: 4em;
-      font-weight: 300;
-      color: aliceblue;
-    }
-
-    .weather-icon {
-      text-align: center;
-      font-size: 4em;
-      margin-bottom: 2%;
-      margin-top: -2%;
-      color: white;
-    }
-
-    .weather-condition {
-      text-align: center;
-      margin-top: 2%;
-      font-size: 2em;
-      font-weight: 130;
-      color: azure;
-    }
+  .weather-condition {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-top: 2%;
+    font-size: 2em;
+    font-weight: 130;
+    color: azure;
 
     .weather-description {
+      text-transform: capitalize;
       text-align: center;
       font-size: 1.3em;
       font-weight: 130;
       color: azure;
     }
+  }
 
-    .temperature {
+
+
+  .temperature {
+    text-align: center;
+    font-size: 2em;
+    font-weight: 200;
+    color: white;
+  }
+
+  .min-max-temp {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10%;
+
+    .min {
       text-align: center;
-      font-size: 2em;
-      font-weight: 200;
+      font-size: 1.5em;
+      font-weight: 120;
       color: white;
     }
 
-    .min-max-temp {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10%;
+    .max {
 
-      .min {
-        text-align: center;
-        font-size: 1.5em;
-        font-weight: 120;
-        color: white;
-      }
+      text-align: center;
+      font-size: 1.5em;
+      font-weight: 120;
+      color: white;
 
-      .max {
-
-        text-align: center;
-        font-size: 1.5em;
-        font-weight: 120;
-        color: white;
-
-      }
     }
+  }
 
+}
+
+
+.forecast {
+  height: 100%;
+
+  .forecast-card {
+    /*     border: solid;
+ */
+    height: 100%;
   }
 }
 
@@ -324,8 +400,8 @@ export default {
   height: 30px;
   width: 30px;
   position: absolute;
-  top: 0%;
-  right: 0%;
+  top: 0.4%;
+  left: 0.3%;
   color: black;
 
   border-radius: 50%;
@@ -339,43 +415,19 @@ export default {
   /* color: #f1f3f1; */
 }
 
-.weather-card-bottom {
-  margin-top: 2%;
-  padding: 2%;
-}
 
-.weather-card-bottom {
-  padding: 10px 10px;
-
-  .top-row {
-    display: grid;
-    grid-template-columns: auto auto;
-
-  }
-
-  .middle-row {
-    margin-top: 2%;
-    display: grid;
-    grid-template-columns: auto auto;
-
-    .weather-data {
-      font-size: 1.5em;
-    }
-  }
-
-  .bottom-row {
-    margin-top: 2%;
-
-    .weather-data {
-      font-size: 1.5em;
-    }
-  }
-}
 
 @media only screen and (max-width:1024px) {
   .data-body {
     display: grid;
     grid-template-columns: 1fr;
+
+
+
+
+
+
+
   }
 }
 

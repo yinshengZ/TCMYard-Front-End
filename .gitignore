@@ -10,6 +10,10 @@ tests/**/coverage/
 tests/e2e/reports
 selenium-debug.log
 
+
+.env.production
+
+
 # Editor directories and files
 .idea
 .vscode

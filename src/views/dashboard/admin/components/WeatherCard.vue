@@ -12,8 +12,8 @@
             <div class="current-day">
               <div class="city-search-form">
 
-                <el-autocomplete class="inline-input" v-model="city" :fetch-suggestions="fetch_city_suggestions"
-                  placeholder="city" @select="handleSelect">
+                <el-autocomplete class="inline-input city-search-input" v-model="city"
+                  :fetch-suggestions="fetch_city_suggestions" placeholder="city" @select="handleSelect">
 
                 </el-autocomplete>
               </div>
@@ -277,6 +277,10 @@ export default {
   height: 300px;
 
 } */
+
+.city-search-input {
+  width: 50%;
+}
 
 .city-search-form {
   display: flex;

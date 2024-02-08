@@ -59,12 +59,7 @@
       <el-form-item label="Marital Status">
 
         <el-select v-model="patient_info.marital_status_id" filterable>
-          <el-option
-            v-for="marital in maritals"
-            :key="marital.id"
-            :label="marital.marital_status"
-            :value="marital.id"
-          />
+          <el-option v-for="marital in maritals" :key="marital.id" :label="marital.marital_status" :value="marital.id" />
         </el-select>
       </el-form-item>
       <el-form-item label="Occupation">
@@ -83,44 +78,38 @@
           <el-option v-for="disease in diseases" :key="disease.id" :label="disease.disease" :value="disease.id" />
         </el-select>
 
-        <el-button class="add-button" plain @click="load_add_disease_form"> <svg-icon
-          icon-class="add"
-        /></el-button>
+        <el-tooltip effect="dark" content="Add new diseases" placement="top">
+          <el-button class="add-button" plain @click="load_add_disease_form"> <svg-icon icon-class="add" /></el-button>
+        </el-tooltip>
+
 
       </el-form-item>
 
       <el-form-item label="Medication">
 
         <el-select v-model="patient_medication_ids" multiple filterable>
-          <el-option
-            v-for="medication in medications"
-            :key="medication.id"
-            :label="medication.medication"
-            :value="medication.id"
-          />
+          <el-option v-for="medication in medications" :key="medication.id" :label="medication.medication"
+            :value="medication.id" />
         </el-select>
 
-        <el-button class="add-button" plain @click="load_add_medication_form"><svg-icon
-          icon-class="add"
-        /></el-button>
+        <el-tooltip effect="dark" content="Add new medications" placement="top">
+          <el-button class="add-button" plain @click="load_add_medication_form"><svg-icon icon-class="add" /></el-button>
+
+        </el-tooltip>
 
       </el-form-item>
 
       <el-form-item label="Allergies">
 
         <el-select v-model="patient_allergy_ids" multiple filterable>
-          <el-option
-            v-for="allergy in allergies"
-            :key="allergy.id"
-            :label="allergy.allergies"
-            :value="allergy.id"
-          />
+          <el-option v-for="allergy in allergies" :key="allergy.id" :label="allergy.allergies" :value="allergy.id" />
 
         </el-select>
 
-        <el-button class="add-button" plain @click="load_add_allergy_form"><svg-icon
-          icon-class="add"
-        /></el-button>
+        <el-tooltip effect="dark" content="Add new allergies" placement="top">
+          <el-button class="add-button" plain @click="load_add_allergy_form"><svg-icon icon-class="add" /></el-button>
+        </el-tooltip>
+
 
       </el-form-item>
 
@@ -129,9 +118,11 @@
         <el-select v-model="patient_symptom_ids" multiple filterable>
           <el-option v-for="symptom in symptoms" :key="symptom.id" :label="symptom.symptom" :value="symptom.id" />
         </el-select>
-        <el-button class="add-button" plain @click="load_add_symptom_form"><svg-icon
-          icon-class="add"
-        /></el-button>
+
+        <el-tooltip effect="dark" content="Add new symptoms" placement="top">
+          <el-button class="add-button" plain @click="load_add_symptom_form"><svg-icon icon-class="add" /></el-button>
+        </el-tooltip>
+
 
       </el-form-item>
 
@@ -223,11 +214,11 @@ export default {
   },
 
   watch: {
-    patient_info: function() {
+    patient_info: function () {
       this.data_change = true
     },
 
-    id: function(newVal) {
+    id: function (newVal) {
       this.id = newVal
     }
   },
@@ -345,12 +336,12 @@ export default {
 
 <style scoped>
 .grid-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2%;
 }
 
 .add-button {
-    margin-left: 2%;
+  margin-left: 2%;
 }
 </style>

@@ -15,13 +15,8 @@
 
               <template v-else>
 
-                <el-date-picker
-                  v-model="form_data.input"
-                  type="date"
-                  placeholder="Pick a date"
-                  format="dd-MM-yyyy"
-                  value-format="dd-MM-yyyy"
-                />
+                <el-date-picker v-model="form_data.input" type="date" placeholder="Pick a date" format="dd-MM-yyyy"
+                  value-format="dd-MM-yyyy" />
 
               </template>
 
@@ -117,7 +112,7 @@
       </div>
     </div>
 
-    <el-dialog title="Add New Patient:" :visible.sync="add_patient_form_visible">
+    <el-dialog title="Add New Patient:" :visible.sync="add_patient_form_visible" append-to-body>
       <add-patient-form :key="key" />
     </el-dialog>
   </div>

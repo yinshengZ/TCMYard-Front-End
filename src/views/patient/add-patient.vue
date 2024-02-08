@@ -148,29 +148,31 @@
           </el-col>
         </el-row>
       </el-form>
-      <el-dialog title="Add New Allergy" :visible.sync="add_allergy_loaded" :before-close="get_allergies">
+      <el-dialog title="Add New Allergy" :visible.sync="add_allergy_loaded" :before-close="get_allergies" append-to-body>
         <add-allergy :key="key" />
       </el-dialog>
 
-      <el-dialog title="Add New Gender" :visible.sync="add_genders_loaded" :before-close="get_genders">
+      <el-dialog title="Add New Gender" :visible.sync="add_genders_loaded" :before-close="get_genders" append-to-body>
         <add-gender :key="key" />
       </el-dialog>
 
-      <el-dialog title="Add New Marital Status" :visible.sync="add_marital_loaded" :before-close="get_maritals">
+      <el-dialog title="Add New Marital Status" :visible.sync="add_marital_loaded" :before-close="get_maritals"
+        append-to-body>
         <add-marital :key="key" />
       </el-dialog>
 
-      <el-dialog title="Add New Symptoms" :visible.sync="add_symptom_loaded" :before-close="get_symptoms">
+      <el-dialog title="Add New Symptoms" :visible.sync="add_symptom_loaded" :before-close="get_symptoms" append-to-body>
         <add-symptom :key="key" />
       </el-dialog>
 
-      <el-dialog title="Add New Medications" :visible.sync="add_medications_loaded" :before-close="get_medications">
+      <el-dialog title="Add New Medications" :visible.sync="add_medications_loaded" :before-close="get_medications"
+        append-to-body>
 
         <add-medication :key="key" />
 
       </el-dialog>
 
-      <el-dialog title="Add New Diseases" :visible.sync="add_diseases_loaded" :before-close="get_diseases">
+      <el-dialog title="Add New Diseases" :visible.sync="add_diseases_loaded" :before-close="get_diseases" append-to-body>
         <add-diseases :key="key" />
       </el-dialog>
 

@@ -79,6 +79,20 @@ export function get_most_used() {
   });
 }
 
+export function get_inventory_usage_counts(id, year) {
+  return request({
+    url: "/inventory/usage_counts/" + id + "/" + year,
+    method: "get",
+  });
+}
+
+export function get_inventoy_usage_units(id, year) {
+  return request({
+    url: "/inventory/usage_units/" + id + "/" + year,
+    method: "get",
+  });
+}
+
 export function get_most_quantity_used() {
   return request({
     url: "/inventory/most_quantity",

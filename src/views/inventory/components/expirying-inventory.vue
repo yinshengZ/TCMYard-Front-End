@@ -20,7 +20,7 @@
 
                         <el-tooltip :content="'expired on ' + scope.row.expiry_date" effect="dark" placement="top">
                             <span class="expired">
-                                Already Expired!
+                                Expired!
                             </span>
                         </el-tooltip>
 

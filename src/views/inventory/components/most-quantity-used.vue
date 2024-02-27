@@ -6,7 +6,14 @@
                 <el-table-column label="Name">
                     <template slot-scope="{row}">
                         <div>
-                            <span>{{ row.inventory_info[0].name }}</span>
+                            <el-popover class="most-quantity-pop-over" placement="right" effect="light" trigger="hover">
+
+                                <most-units-used-chart :id="row.inventory_id"
+                                    :key="row.inventory_id"></most-units-used-chart>
+
+                                <span class="inventory-name" slot="reference">{{ row.inventory_info[0].name }}</span>
+
+                            </el-popover>
                         </div>
                     </template>
                 </el-table-column>
@@ -28,7 +35,11 @@
 
 <script>
 import { get_most_quantity_used } from '@/api/inventory';
+import mostUnitsUsedChart from './charts/most-units-used-chart.vue';
 export default {
+    components: {
+        mostUnitsUsedChart,
+    },
     data() {
         return {
             inventory_data: [],
@@ -40,7 +51,7 @@ export default {
     },
 
     methods: {
-        get_data() {
+        async get_data() {
             get_most_quantity_used().then((response) => {
                 this.inventory_data = response.data
             })

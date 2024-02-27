@@ -2,14 +2,12 @@
   <div>
     <div class="to-do-list">
       <el-card>
-        <div slot="header" class="clearfix">
+        <div slot="header" class="clearfix card-header">
           <span>To Do List</span>
           <div class="new-task-button">
             <el-tooltip effect="dark" content="Add New Task" placement="top">
-              <el-button mini type="primary" class="new-todo-button" @click="add_todo_form"><svg-icon
-                class="icon"
-                icon-class="create"
-              /></el-button>
+              <el-button mini type="primary" class="new-todo-button" @click="add_todo_form"><svg-icon class="icon"
+                  icon-class="create" /></el-button>
             </el-tooltip>
 
           </div>
@@ -39,16 +37,11 @@
             <template slot-scope="data">
               <div class="operation-buttons">
                 <el-button type="success" icon="icon-size el-icon-check" circle @click="update_todo(1, data.row.id)" />
-                <el-button type="warning" circle @click="update_todo(2, data.row.id)"><svg-icon
-                  icon-class="pause"
-                  class="icon-size"
-                /></el-button>
+                <el-button type="warning" circle @click="update_todo(2, data.row.id)"><svg-icon icon-class="pause"
+                    class="icon-size" /></el-button>
 
-                <el-popconfirm
-                  title="Are you sure you want to delete this? "
-                  @onConfirm="delete_todo(data.row.id)"
-                  @onCancel="get_all_todo"
-                >
+                <el-popconfirm title="Are you sure you want to delete this? " @onConfirm="delete_todo(data.row.id)"
+                  @onCancel="get_all_todo">
                   <el-button slot="reference" type="danger" icon="el-icon-close" class="icon-size" circle />
                 </el-popconfirm>
 
@@ -154,10 +147,17 @@ export default {
 <style scoped>
 .to-do-list {
   width: 100%;
-  height: 300px;
-  overflow: scroll;
+  height: 150px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 
   /* margin-top: 1%; */
+}
+
+.card-header {
+  position: sticky;
+  left: 0%;
+  top: 0%;
 }
 
 .to-do-list ul {

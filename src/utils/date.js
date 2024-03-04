@@ -51,3 +51,7 @@ export function getMonths(type) {
       return months_numeric;
   }
 }
+
+export function getCurrentYear() {
+  return new Date().getFullYear();
+}

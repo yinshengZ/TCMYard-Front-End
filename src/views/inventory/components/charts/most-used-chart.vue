@@ -1,17 +1,10 @@
 <template>
     <div class="popover-chart" v-loading="loading">
 
-        <!--   <span>inventory id is {{ id }}</span>
-        {{ inventory_usage }}
- -->
-        <div class="year-selector">
-            <el-link><span>2023</span></el-link>
-            <el-divider direction="vertical"></el-divider>
-            <el-link><span>2024</span></el-link>
-        </div>
-        <div class="data-table">
 
-            <el-table :data="inventory_usage">
+        <div class="data-table">
+            <span class="table-header">Showing data from <span class="year-span">{{ year }}</span></span>
+            <el-table :data="monthly_inventory_usage" v-loading="table_loading">
                 <el-table-column label="Used Times" width="120px">
                     <template slot-scope="{row}">
                         <div>
@@ -20,6 +13,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column label="Month">
+
                     <template slot-scope="{row}">
                         <div>
                             <span>{{ row.month }}</span>
@@ -30,7 +24,7 @@
         </div>
 
 
-        <div :id="inventory_id" class="chart" :ref="inventory_id">
+        <div :id="chart_id" class="chart" :ref="inventory_id">
 
         </div>
 
@@ -45,77 +39,64 @@ require('echarts/theme/macarons')
 import { getMonths } from "@/utils/date"
 
 
-
-import { get_inventory_usage_counts } from '@/api/inventory';
-
-
 export default {
-    props: ['id'],
+    props: ['id', 'monthly_usage', 'year'],
 
     data() {
         return {
-            inventory_usage: [],
+            monthly_inventory_usage: this.monthly_usage,
             inventory_id: this.id,
-            year: 2023,
+            component_year: this.year,
+            chart_id: 'most-used-chart' + this.year + '-' + this.id,
             date_xAxis: [],
             date_yAxis: [],
-            loading: true,
+            loading: false,
+            chart: '',
+            line_chart: '',
+            chart_loading: true,
+            table_loading: true,
         }
     },
 
 
     mounted() {
+
         this.get_inventory_usage_history()
 
     },
-    beforeDestroy() {
-        if (!this.chart) {
-            return
-        }
-        this.chart.dispose()
-        this.chart = null
-    },
-    watch: {
-        year() {
-            this.get_inventory_usage_history()
-        }
-    },
 
-    updated() {
-    },
 
     methods: {
 
+
         get_inventory_usage_history() {
-            get_inventory_usage_counts(this.id, this.year).then((response) => {
-                this.inventory_usage = response.data
-                let data = [];
 
-                for (let i = 0; i < this.inventory_usage.length; i++) {
-                    data.push(this.inventory_usage[i].counts);
-                }
+            this.loading = true
+            this.table_loading = true;
+            this.chart_loading = true;
+            this.date_xAxis = getMonths('short')
 
-                this.date_yAxis = data;
-                this.date_xAxis = getMonths('short')
-                this.initChart()
+            for (let i = 0; i < this.monthly_inventory_usage.length; i++) {
+                this.date_yAxis.push(this.monthly_inventory_usage[i].counts)
+            }
+            this.table_loading = false;
+            this.chart_loading = false;
+            this.loading = false
 
-                this.loading = !this.loading
-            })
-
-
-
-
-
-
-
-
-        },
+            /*     console.log('id: ' + this.inventory_id)
+                console.log(this.date_xAxis)
+                console.log(this.date_yAxis) */
+            this.initChart()
+/*             console.log('initChart triggered!')
+ */        },
 
         initChart() {
 
-            let chart = document.getElementById(this.inventory_id)
+            this.chart = document.getElementById(this.chart_id)
+            this.line_chart = echart.init(this.chart, 'macarons');
 
-            let line_chart = echart.init(chart, 'macarons');
+
+
             let option;
             option = {
                 xAxis: {
@@ -134,7 +115,7 @@ export default {
                 ]
             };
 
-            option && line_chart.setOption(option, true);
+            option && this.line_chart.setOption(option, true);
 
         }
     }
@@ -142,7 +123,7 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 .popover-chart {
     display: grid;
     /* grid-template-columns: 0.2fr 1.8fr; */
@@ -155,7 +136,18 @@ export default {
     grid-area: top;
     margin-bottom: 2%;
     margin-top: 1%;
+    display: flex;
+    flex-direction: row;
+
+
 }
+
+.data-table>.table-header>.year-span {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+
 
 .data-table {
     grid-area: table;

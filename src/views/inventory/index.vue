@@ -4,26 +4,49 @@
     <div class="inventory-grid">
 
 
-      <div class="expirying-invetories">
-        <el-card>
+      <el-tabs tab-position="left">
 
-          <p class="card-heading">Expirying Inventories</p>
-          <expirying-inventory></expirying-inventory>
-        </el-card>
-      </div>
+        <el-tab-pane label="Expirying" lazy>
+          <div class="expirying-invetories">
+            <el-card>
 
-      <div>
+              <p class="card-heading">Expirying Inventories</p>
+              <expirying-inventory :key="key"></expirying-inventory>
+            </el-card>
+          </div>
 
-        <most-used></most-used>
-      </div>
+        </el-tab-pane>
 
-      <div>
-        <most-quantity-used></most-quantity-used>
-      </div>
+        <el-tab-pane label="Frequently Used" lazy>
+          <div>
+            <component is="most-used"></component>
+            <!--             <most-used :key="key"></most-used>
+ -->
+          </div>
 
-      <div>
-        <low-stock-inventories></low-stock-inventories>
-      </div>
+        </el-tab-pane>
+
+        <el-tab-pane label="Quantities Used" lazy>
+
+          <div>
+            <most-quantity-used :key="key"></most-quantity-used>
+          </div>
+        </el-tab-pane>
+
+        <el-tab-pane label="Low Stocks" lazy>
+          <div>
+            <low-stock-inventories :key="key"></low-stock-inventories>
+          </div>
+
+        </el-tab-pane>
+
+      </el-tabs>
+
+
+
+
+
+
 
 
     </div>
@@ -42,7 +65,20 @@ import mostUsed from './components/most-used.vue';
 import mostQuantityUsed from './components/most-quantity-used.vue';
 import lowStockInventories from './components/low-stock-inventories.vue';
 export default {
-  components: { InventoryList, expiryingInventory, mostUsed, mostQuantityUsed, lowStockInventories }
+  components: { InventoryList, expiryingInventory, mostUsed, mostQuantityUsed, lowStockInventories },
+
+  data() {
+    return {
+      key: 0
+    }
+  },
+
+  methods: {
+    reload_tab_content() {
+      this.key += 1
+    }
+  }
+
 }
 </script>
 

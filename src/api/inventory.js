@@ -72,9 +72,23 @@ export function get_expirying() {
   });
 }
 
-export function get_most_used() {
+export function get_most_used(quantity, year) {
   return request({
-    url: "/inventory/most_used",
+    url: "/inventory/most_used/" + quantity + "/" + year,
+    method: "get",
+  });
+}
+
+export function get_all_inventory_used_years() {
+  return request({
+    url: "/inventory/used_years/",
+    method: "get",
+  });
+}
+
+export function get_inventory_used_years(id) {
+  return request({
+    url: "/inventory/used_years/" + id,
     method: "get",
   });
 }
@@ -93,9 +107,9 @@ export function get_inventoy_usage_units(id, year) {
   });
 }
 
-export function get_most_quantity_used() {
+export function get_most_quantity_used(quantity, year) {
   return request({
-    url: "/inventory/most_quantity",
+    url: "/inventory/most_quantity/" + quantity + "/" + year,
     method: "get",
   });
 }

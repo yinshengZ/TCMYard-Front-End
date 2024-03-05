@@ -86,15 +86,16 @@ export default {
 .inventory-grid {
   .expirying-invetories {
 
-    width: 35%;
-    max-height: 600px;
+    width: 100%;
+    /*     max-height: 600px;
+ */
     overflow: hidden;
-    padding: -20px;
+    /* padding: -20px; */
 
-    .el-card__body {
+    /*     .el-card__body {
       padding: 0px !important;
 
-    }
+    } */
 
 
   }

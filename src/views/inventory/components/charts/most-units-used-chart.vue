@@ -6,13 +6,6 @@
         <div class="data-table">
             <span class="table-header">Showing data from <span class="year-span">{{ year }}</span> </span>
             <el-table :data="monthly_inventory_usage">
-                <el-table-column label="Units Used" width="120px">
-                    <template slot-scope="{row}">
-                        <div>
-                            <span>{{ row.units }}</span>
-                        </div>
-                    </template>
-                </el-table-column>
 
                 <el-table-column label="Month">
 
@@ -22,6 +15,15 @@
                         </div>
                     </template>
                 </el-table-column>
+
+                <el-table-column label="Units Used" width="120px">
+                    <template slot-scope="{row}">
+                        <div>
+                            <span>{{ row.units }}</span>
+                        </div>
+                    </template>
+                </el-table-column>
+
 
             </el-table>
         </div>

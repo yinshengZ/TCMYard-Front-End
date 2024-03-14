@@ -136,32 +136,6 @@ export const constantRoutes = [
     ],
   },
 
-  /*   {
-    path: '/records',
-    component: Layout,
-    name: 'Record',
-    meta: {
-      title: 'Record',
-      icon: 'skill'
-    },
-    children: [
-      {
-        path: 'overview',
-        name: 'RecordOverView',
-        component: () => import('@/views/records/index.vue'),
-        meta: { title: 'Record Overview', icon: 'overview', affix: true }
-      },
-
-      {
-        path: 'search',
-        name: 'SearchRecord',
-        component: () => import('@/views/records/search.vue'),
-        meta: { title: 'Search Records', icon: 'search', affix: true }
-      }
-    ]
-
-  }, */
-
   {
     path: "/finance",
     component: Layout,
@@ -178,6 +152,13 @@ export const constantRoutes = [
         meta: { title: "Finance", icon: "dashboard", affix: true },
       },
 
+      {
+        path: "manage-incomes",
+        name: "Manage Incomes",
+        component: () =>
+          import("@/views/finance/components/manage-incomes.vue"),
+        meta: { title: "Manage Incomes", icon: "gbp2", affix: true },
+      },
       /*   {
         path: 'overview',
         name: 'FianceOverview',

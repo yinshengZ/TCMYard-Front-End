@@ -5,13 +5,6 @@
         <div class="data-table">
             <span class="table-header">Showing data from <span class="year-span">{{ year }}</span></span>
             <el-table :data="monthly_inventory_usage" v-loading="table_loading">
-                <el-table-column label="Used Times" width="120px">
-                    <template slot-scope="{row}">
-                        <div>
-                            <span>{{ row.counts }}</span>
-                        </div>
-                    </template>
-                </el-table-column>
                 <el-table-column label="Month">
 
                     <template slot-scope="{row}">
@@ -20,6 +13,15 @@
                         </div>
                     </template>
                 </el-table-column>
+
+                <el-table-column label="Used Times" width="120px">
+                    <template slot-scope="{row}">
+                        <div>
+                            <span>{{ row.counts }}</span>
+                        </div>
+                    </template>
+                </el-table-column>
+
             </el-table>
         </div>
 

@@ -146,10 +146,12 @@ export default {
 
 <style scoped>
 .to-do-list {
-  width: 100%;
-  height: 150px;
+  display:block;
+  overflow:auto;
   overflow-y: scroll;
   overflow-x: hidden;
+  margin-top:1%;
+  max-height:40vh;
 
   /* margin-top: 1%; */
 }

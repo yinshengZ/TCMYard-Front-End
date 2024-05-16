@@ -68,22 +68,17 @@ export default {
 
 <style lang="scss" scoped>
 .dashboard-editor-container {
-  /* overflow-y: scroll; */
   padding: 32px;
   background-color: rgb(240, 242, 245);
   position: relative;
 
 
-  /*  .top-row {
 
-    padding: 20px;
-  } */
 
   .chart-wrapper {
     background: #fff;
     padding: 16px 16px 0;
-    /*     margin-bottom: 60px;
- */
+
   }
 
   .bottom-row {

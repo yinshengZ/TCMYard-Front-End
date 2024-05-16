@@ -1,6 +1,6 @@
 <template>
     <div v-loading="loading">
-        <el-table :data="expirying_inventories" v-loading="loading">
+        <el-table :data="paged_inventories" v-loading="loading">
             <el-table-column type="expand">
                 <template slot-scope="scope">
                     <div>
@@ -51,6 +51,12 @@
             </el-table-column>
         </el-table>
 
+        <el-pagination background layout="sizes,prev,pager,next" :page_size="page_size"
+        :page-sizes="page_sizes"
+        :total="expirying_inventories.length"
+        @size-change="change_page_size"
+        @current-change="set_page"></el-pagination>
+
         <el-dialog title="Update Inventory" :visible.sync="update_dialog_visible"
             :before-close="get_expirying_inventories">
             <update-inventory-form :inventory_id="inventory_id" :key="key"></update-inventory-form>
@@ -73,7 +79,15 @@ export default {
             update_dialog_visible: false,
             key: 0,
             inventory_id: '',
+            page_size:5,
+            page:1,
+            page_sizes:[5,10,15,20,50,100]
 
+        }
+    },
+    computed:{
+        paged_inventories(){
+            return this.expirying_inventories.slice(this.page_size*this.page - this.page_size, this.page_size*this.page)
         }
     },
 
@@ -82,6 +96,12 @@ export default {
     },
 
     methods: {
+        set_page(val){
+            this.page=val
+        },
+        change_page_size(val){
+            this.page_size = val
+        },
         load_update_inventory_form(id) {
             this.update_dialog_visible = true
             this.inventory_id = id

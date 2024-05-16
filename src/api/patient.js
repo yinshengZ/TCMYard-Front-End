@@ -14,6 +14,13 @@ export function getAll() {
   })
 }
 
+export function getSimplePatientList(){
+  return request({
+    url:'/patient/basic_list',
+    method:'get'
+  })
+}
+
 export function getSingle(id) {
   return request({
     url: '/patient/' + id,

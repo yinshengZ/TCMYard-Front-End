@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <el-button style="width:100%" type="success" icon="el-icon-plus" @click="add_row">Ingredient</el-button>
     <div class="add_herbs_form">
       <el-form v-model="herb_details" label-width="80px" label-position="left">

@@ -8,9 +8,7 @@
 
         <el-tab-pane label="Expirying" lazy>
           <div class="expirying-invetories">
-            <el-card>
-
-              <p class="card-heading">Expirying Inventories</p>
+            <el-card>             
               <expirying-inventory :key="key"></expirying-inventory>
             </el-card>
           </div>
@@ -19,9 +17,9 @@
 
         <el-tab-pane label="Frequently Used" lazy>
           <div>
-            <component is="most-used"></component>
-            <!--             <most-used :key="key"></most-used>
- -->
+            <!-- <component is="most-used"></component> -->
+                        <most-used :key="key"></most-used>
+
           </div>
 
         </el-tab-pane>

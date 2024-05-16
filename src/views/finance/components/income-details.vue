@@ -11,10 +11,16 @@
 
                     <div class="content">
                         <span class="label">Customer Name: </span>
-                        <span class="capitalize link-text" @click="get_patient_details(patient_details.id)">{{
-                            patient_details.first_name }} {{
-                            patient_details.last_name
-                        }}</span>
+                        <el-popconfirm confirmButtonText="Go" cancelButtonText="Cancel"
+                            title="Move to the patient's profile page?"
+                            @onConfirm="get_patient_details(patient_details.id)">
+
+                            <span slot="reference" class="capitalize link-text">{{
+                                patient_details.first_name }} {{
+                                patient_details.last_name
+                            }}</span>
+                        </el-popconfirm>
+
                     </div>
 
                 </div>

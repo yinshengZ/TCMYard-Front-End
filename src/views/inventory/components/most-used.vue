@@ -22,7 +22,7 @@
             </div>
 
 
-            <el-table :data="most_used_inventories">
+            <el-table :data="paged_inventory">
                 <el-table-column label="Name">
                     <template slot-scope="{row}">
                         <div>
@@ -51,6 +51,13 @@
                     </template>
                 </el-table-column>
             </el-table>
+
+            <el-pagination background layout="sizes,prev,pager,next"
+            :page-size="page_size"
+            :page-sizes="page_sizes"
+            :total="most_used_inventories.length"
+            @size-change="change_page_size"
+            @current-change="set_page"></el-pagination>
         </el-card>
     </div>
 </template>
@@ -73,29 +80,22 @@ export default {
             year: 0,
             records: 10,
             years: [],
-            number_of_records: [
-                {
-                    label: '5',
-                    value: 5
-                },
-                {
-                    label: '10',
-                    value: 10
-                },
-                {
-                    label: '15',
-                    value: 15
-                },
-                {
-                    label: '20',
-                    value: 20
-                }
-            ],
+           page_size:5,
+           page:1,
+           page_sizes:[5,10,15,20,50,100]
         }
     },
     watch: {
         records() {
             this.get_inventory()
+        }
+    },
+    computed:{
+        paged_inventory(){
+            return this.most_used_inventories.slice(
+                this.page_size*this.page - this.page_size,
+                this.page_size * this.page
+            )
         }
     },
 
@@ -106,6 +106,12 @@ export default {
     },
 
     methods: {
+        set_page(val){
+            this.page = val
+        },
+        change_page_size(val){
+            this.page_size = val
+        },
         get_current_year() {
             this.year = getCurrentYear()
         },

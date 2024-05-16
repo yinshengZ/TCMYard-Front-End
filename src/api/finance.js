@@ -278,3 +278,75 @@ export function getPaymentMethods() {
     method: "get",
   });
 }
+
+export function addPaymentMethod(data){
+  return request({
+    url:'/payment_methods',
+    method:'post',
+    data
+  })
+}
+
+
+/**Expenses */
+
+export function getExpenseCategories(){
+  return request({
+    url:'/finance/expense/expense_categories',
+    method:'get'
+  })
+}
+
+export function addExpenseCategory(data){
+
+  return request({
+    url:'/finance/expense/expense_categories/',
+    method:'post',
+    data,
+    
+  })
+}
+
+export function addExpense(data){
+  return request({
+    url:'/finance/expense',
+    method:'post',
+    data
+  })
+}
+
+export function updateExpense(data){
+  return request({
+    url:'/finance/expense',
+    method:'put',
+    data
+  })
+}
+
+export function deleteExpense(id){
+  return request({
+    url:'/finance/expense/'+id,
+    method:'delete',
+  })
+}
+
+export function getExpenseByYear(year){
+  return request({
+    url:'/finance/expense/year/'+year,
+    method:'get'
+  })
+}
+
+export function getExpenseYears(){
+  return request({
+    url:'/finance/expense/year',
+    method:'get'
+  })
+}
+
+export function getExpenseByID(id){
+  return request({
+    url:'/finance/expense/'+id,
+    method:'get'
+  })
+}

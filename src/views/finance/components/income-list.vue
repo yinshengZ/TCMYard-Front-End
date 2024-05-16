@@ -7,13 +7,9 @@
                 <div class="header-title">
                     <h2>All Incomes By Year</h2>
                     <p>Showing Incomes From Year <span class="year-text">{{ year }}</span> </p>
+
                 </div>
-                <!-- <div class="year-selector">
-                    <div class="years" v-for="year in income_years">
-                        <el-link @click="set_year(year.year)"><span>{{ year.year }}</span></el-link>
-                        <el-divider direction="vertical"></el-divider>
-                    </div>
-                </div> -->
+
 
 
                 <div class="year-selector">
@@ -22,13 +18,16 @@
                         <el-option v-for="year in income_years" :key="year.year" :value="year.year"
                             :label="year.year"></el-option>
                     </el-select>
+                    <el-tooltip effect="dark" placement="top" content="Add Income">
+                       <el-button plain @click="load_add_income_form"><svg-icon icon-class="add"></svg-icon></el-button>
+                    </el-tooltip>
                 </div>
             </div>
 
 
 
             <el-table :data="paged_incomes" v-loading="loading_data">
-                <el-table-column label="ID">
+                <el-table-column label="ID" width="70">
                     <template slot-scope="{row}">
                         <div>
                             {{ row.id }}
@@ -36,7 +35,7 @@
                     </template>
                 </el-table-column>
 
-                <el-table-column label="Category">
+                <el-table-column label="Category" width="120px">
 
                     <template slot-scope="{row}">
                         <div>
@@ -45,7 +44,7 @@
                     </template>
                 </el-table-column>
 
-                <el-table-column label="Income">
+                <el-table-column label="Income" width="120px">
 
                     <template slot-scope="{row}">
                         <div>
@@ -54,16 +53,16 @@
                     </template>
                 </el-table-column>
 
-                <el-table-column label="Before Discount">
+             <!--    <el-table-column label="Before Discount">
 
                     <template slot-scope="{row}">
                         <div>
                             <span>{{ row.original_amount / 100 }}</span>
                         </div>
                     </template>
-                </el-table-column>
+                </el-table-column> -->
 
-                <el-table-column label="Discount">
+                <el-table-column label="Discount" width="120px">
 
                     <template slot-scope="{row}">
                         <div>
@@ -72,7 +71,7 @@
                     </template>
                 </el-table-column>
 
-                <el-table-column label="Payment Method">
+                <el-table-column label="Payment Method" width="150px">
 
                     <template slot-scope="{row}">
                         <div>
@@ -81,7 +80,7 @@
                     </template>
                 </el-table-column>
 
-                <el-table-column label="Date" fit="true">
+                <el-table-column label="Date" fit="true" width="150px">
 
                     <template slot-scope="{row}">
                         <div>
@@ -90,17 +89,36 @@
                     </template>
                 </el-table-column>
 
-                <el-table-column>
+                <el-table-column label="Patient" width="350px">
 
                     <template slot-scope="{row}">
-                        <div>
+                        <!-- <div>
                             <el-button type="primary" @click="load_income_details_drawer(row.id)">Patient's
                                 Info</el-button>
 
+                        </div> -->
+                        <el-popconfirm
+                        confirmButtonText="Go"
+                        cancelButtonText="Cancel"
+                        title="Move to the patient's profile page?"
+                        @onConfirm="get_patient_details(row.patient.id)">
+
+                        <div slot="reference" class="patient-name">
+                            <span class="capitalize">{{ row.patient.first_name }} </span>
+                            <span class="capitalize"> {{ row.patient.last_name }}</span>
                         </div>
+                        </el-popconfirm>
+                       
                     </template>
                 </el-table-column>
             </el-table>
+
+            <el-dialog title="Add New Income"
+            :visible.sync="add_income_form_loaded"
+            :before-close="get_income_by_year"
+            >
+            <add-income-form></add-income-form>
+            </el-dialog>
 
             <el-pagination background layout="sizes, prev, pager, next " :page-size="pagination.page_size"
                 :page-sizes="pagination.page_sizes" :total="incomes.length" @size-change="change_page_size"
@@ -108,9 +126,7 @@
 
         </el-card>
 
-        <el-drawer :visible.sync="drawer_loaded" direction="ltr" :before-close="get_income_by_year">
-            <income-details :income_id="income_id" :key="key"></income-details>
-        </el-drawer>
+        
     </div>
 </template>
 
@@ -119,9 +135,11 @@
 import { getIncomeYears, getIncomeByYear } from '@/api/finance';
 import { getCurrentYear } from '@/utils/date';
 import IncomeDetails from './income-details.vue'
+import addIncomeForm from './add-income-form.vue';
 export default {
     components: {
         IncomeDetails,
+        addIncomeForm
     },
     data() {
         return {
@@ -129,7 +147,7 @@ export default {
             income_years: [],
             year: 0,
             incomes: [],
-            drawer_loaded: false,
+            add_income_form_loaded:false,
             income_id: '',
             key: 0,
             pagination: {
@@ -162,6 +180,9 @@ export default {
     },
 
     methods: {
+       get_patient_details(id){
+            this.$router.push({path:'/patient/details/'+id})
+       },
         get_current_year() {
             this.year = getCurrentYear()
         },
@@ -177,11 +198,10 @@ export default {
             this.pagination.page = val
         },
 
-        load_income_details_drawer(id) {
-            this.drawer_loaded = true
-            this.income_id = id
-            this.key++
-
+        load_add_income_form(){
+            this.key+=1
+            this.add_income_form_loaded = true
+            
         },
         set_year(year) {
             this.year = year
@@ -198,7 +218,7 @@ export default {
                 this.loading_data = false
             })
 
-            this.drawer_loaded = false
+            this.add_income_form_loaded = false
 
 
         }
@@ -218,9 +238,20 @@ export default {
     margin-top: 0.5%;
 }
 
+.quick-add-button {
+
+    margin-left: auto;
+    margin-right: 5%;
+}
+
 .year-text {
     font-weight: bold;
     font-size: 1.2em;
+}
+
+.patient-name:hover{
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 .capitalize {

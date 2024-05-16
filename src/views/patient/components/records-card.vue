@@ -68,7 +68,7 @@
     </el-timeline>
 
     <el-dialog title="Add Record: " :visible.sync="add_record_form_loaded" :before-close="handleClose">
-      <add-record-form :patient_id="patient_id" :user_id="user_id" :user_name="user_name" />
+      <add-record-form :patient_id="patient_id" :user_id="user_id" :user_name="user_name" :key="key"/>
     </el-dialog>
 
     <el-dialog title="Update Record: " :visible.sync="update_record_form_loaded" :before-close="handleClose">
@@ -113,6 +113,7 @@ export default {
   methods: {
     load_add_record_form() {
       this.add_record_form_loaded = true
+      this.key+=1
     },
 
     load_update_record_form(id) {

@@ -159,6 +159,13 @@ export const constantRoutes = [
           import("@/views/finance/components/manage-incomes.vue"),
         meta: { title: "Manage Incomes", icon: "gbp2", affix: true },
       },
+      {
+        path: "manage-expenses",
+        name: "Manage Expenses",
+        component: () =>
+          import("@/views/finance/components/manage-expenses.vue"),
+        meta: { title: "Manage Expenses", icon: "gbp2", affix: true },
+      },
       /*   {
         path: 'overview',
         name: 'FianceOverview',

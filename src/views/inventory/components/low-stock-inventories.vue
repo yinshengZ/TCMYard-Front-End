@@ -3,7 +3,7 @@
         <el-card>
             <p>Inventory With Lowest Stocks</p>
 
-            <el-table :data="inventory">
+            <el-table :data="paged_inventory">
                 <el-table-column label="Name">
                     <template slot-scope="{row}">
                         <div>
@@ -33,6 +33,10 @@
                 </el-table-column>
             </el-table>
 
+            <el-pagination background layout="sizes, prev, pager, next" 
+            :page-size="page_size" :page-sizes="page_sizes"
+            :total="inventory.length" @size-change="change_page_size" @current-change="set_page"></el-pagination>
+
         </el-card>
 
         <el-dialog :visible.sync="update_form_loaded" :before-close="get_data">
@@ -56,7 +60,16 @@ export default {
             inventory: [],
             key: 0,
             inventory_id: '',
-            update_form_loaded: false,
+            update_form_loaded: false,            
+            page_size:5,
+            page:1,
+            page_sizes:[5,10,15,20,50,100]
+        }
+    },
+
+    computed:{
+        paged_inventory(){
+            return this.inventory.slice(this.page_size*this.page - this.page_size, this.page_size*this.page)
         }
     },
 
@@ -65,6 +78,14 @@ export default {
     },
 
     methods: {
+        set_page(val){
+            this.page=val
+        },
+
+        change_page_size(val){
+            this.page_size=val
+        },
+        
         load_update_form(id) {
 
             this.inventory_id = id

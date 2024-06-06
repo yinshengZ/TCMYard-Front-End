@@ -6,19 +6,20 @@
                 <span>Showing Data From <span class="header-year">{{ year }}</span></span>
 
                 <div class="year-selector">
-                    <div v-for="year in years">
+                    <!-- <div v-for="year in years">
                         <el-link @click="get_inventory_by_year(year.year)"><span>{{ year.year }}</span></el-link>
                         <el-divider direction="vertical"></el-divider>
-                    </div>
-                </div>
-
-                <div class="number-of-records-selector">
-                    <span>No. of Records To Display: </span>
-                    <el-select v-model="records" placeholder="No. of Records">
-                        <el-option v-for="number in number_of_records" :key="number.value" :label="number.label"
-                            :value="number.value"></el-option>
+                    </div> -->
+                    {{ years }}
+                    <el-select v-model="year">
+                        <el-option v-for="year in years"
+                        :key="year.year"
+                        :label="year.year"
+                        :value="year.year"></el-option>
                     </el-select>
                 </div>
+
+               
             </div>
 
 
@@ -88,7 +89,11 @@ export default {
     watch: {
         records() {
             this.get_inventory()
+        },
+        year(){
+            this.get_inventory()
         }
+
     },
     computed:{
         paged_inventory(){

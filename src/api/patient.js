@@ -251,3 +251,10 @@ export function deletePatientAllergy(patient_id, allergy_id) {
     method: 'delete'
   })
 }
+
+export function getPatientTreatmentStats(number_to_get){
+  return request({
+    url:'/patient/stat/treatments/'+number_to_get,
+    method:'get'
+  })
+}

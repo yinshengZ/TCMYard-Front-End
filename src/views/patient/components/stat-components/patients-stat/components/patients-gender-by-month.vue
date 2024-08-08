@@ -61,7 +61,7 @@
 <script>
 import echarts from 'echarts'
 import { getCurrentYear } from '@/utils/date';
-import { getPatientGendersListByYear, getPatientYears, getPateintsByGenderYear } from '@/api/patient';
+import { getPatientGendersListByYear, getPateintsByGenderYear } from '@/api/patient';
 export default {
     props: ['patient_years'],
     data() {
@@ -133,7 +133,7 @@ export default {
 
         initChart() {
             echarts.init(document.getElementById('gender_by_year_chart')).dispose()
-            console.log(document.getElementById('gender_by_year_chart'))
+
             let chart = echarts.init(document.getElementById('gender_by_year_chart'), 'macarons')
 
             console.log(chart)
@@ -222,9 +222,4 @@ export default {
         }
     }
 }
-
-/* #gender_by_year_chart {
-    width: 100%;
-    height: 100%;
-} */
 </style>

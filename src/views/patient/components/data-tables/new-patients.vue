@@ -45,33 +45,15 @@
           <div>
             <el-button-group>
               <el-tooltip effect="dark" placement="top" content="Patient's Profile">
-                <el-button
-                  icon="el-icon-search"
-                  type="primary"
-                  @click="patient_details(row.id)"
-                />
+                <el-button icon="el-icon-search" type="primary" @click="patient_details(row.id)" />
               </el-tooltip>
               <el-tooltip effect="dark" placement="top" content="Quick Update">
-                <el-button
-                  icon="el-icon-edit"
-                  type="success"
-                  @click="load_update_patient_form(row.id)"
-                />
+                <el-button icon="el-icon-edit" type="success" @click="load_update_patient_form(row.id)" />
               </el-tooltip>
               <el-tooltip effect="dark" placement="top" content="Delete Patient">
-                <el-popconfirm
-                  confirmation-button-text="Yes"
-                  cancel-button-text="Cancel"
-                  icon="el-icon-info"
-                  icon-color="red"
-                  title="Are you sure to delete this patient?"
-                >
-                  <el-button
-                    slot="reference"
-                    icon="el-icon-delete"
-                    type="danger"
-                    @click="delete_patient(row.id)"
-                  />
+                <el-popconfirm confirmation-button-text="Yes" cancel-button-text="Cancel" icon="el-icon-info"
+                  icon-color="red" title="Are you sure to delete this patient?">
+                  <el-button slot="reference" icon="el-icon-delete" type="danger" @click="delete_patient(row.id)" />
                 </el-popconfirm>
 
               </el-tooltip>
@@ -126,7 +108,6 @@ export default {
     get_newest_patients(number) {
       getNewestPatients(number).then((response) => {
         this.patient_data = response.data.data
-        console.log(response)
       })
     },
     date_converter,
@@ -150,6 +131,6 @@ export default {
 
 <style scoped>
 .capitalize {
-    text-transform: capitalize;
+  text-transform: capitalize;
 }
 </style>

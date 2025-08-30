@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-card class="card-outer">
+    <el-card class="card-outer" v-loading="loading">
       <div class="card">
         <div class="card-box">
 
@@ -36,6 +36,7 @@ import { getMostPatientsLocale } from '@/api/patient'
 export default {
   data() {
     return {
+      loading: true,
       patients_locale: '',
       locale_dialog_loaded: false,
       most_locale: '',
@@ -47,10 +48,12 @@ export default {
   },
   methods: {
     get_most_patients_locale() {
+      this.loading = true
       getMostPatientsLocale().then((response) => {
         this.patients_locale = response.data
         this.most_locale = response.data[0].locale
         this.most_locale_total = response.data[0].total
+        this.loading = false
       })
     },
 
@@ -65,90 +68,90 @@ export default {
 
 <style lang="scss" scoped>
 .card-outer {
-    height: 140px;
-    border-radius: 5px;
+  height: 140px;
+  border-radius: 5px;
 }
 
 .card {
-    --red: hsl(0, 78%, 62%);
-    --cyan: hsl(180, 62%, 55%);
-    --orange: hsl(34, 97%, 64%);
-    --blue: hsl(212, 86%, 64%);
-    --varyDarkBlue: hsl(234, 12%, 34%);
-    --grayishBlue: hsl(229, 6%, 66%);
-    --veryLightGray: hsl(0, 0%, 98%);
-    --weight1: 200;
-    --weight2: 400;
-    --weight3: 600;
+  --red: hsl(0, 78%, 62%);
+  --cyan: hsl(180, 62%, 55%);
+  --orange: hsl(34, 97%, 64%);
+  --blue: hsl(212, 86%, 64%);
+  --varyDarkBlue: hsl(234, 12%, 34%);
+  --grayishBlue: hsl(229, 6%, 66%);
+  --veryLightGray: hsl(0, 0%, 98%);
+  --weight1: 200;
+  --weight2: 400;
+  --weight3: 600;
 
 }
 
 .card-box {
-    width: 350px;
+  width: 350px;
 
-    height: 100px;
-    border-radius: 5px;
-    display: grid;
-    grid-template-columns: 0.5fr 1fr;
+  height: 100px;
+  border-radius: 5px;
+  display: grid;
+  grid-template-columns: 0.5fr 1fr;
 }
 
 .card-box:hover {
 
-    cursor: pointer;
+  cursor: pointer;
 
-    .card-icon {
-        background-color: #C63D2F;
-        border-radius: 5px;
+  .card-icon {
+    background-color: #C63D2F;
+    border-radius: 5px;
 
-    }
+  }
 
-    .card-panel-icon {
-        color: var(--veryLightGray);
+  .card-panel-icon {
+    color: var(--veryLightGray);
 
-    }
+  }
 }
 
 .card-icon {
-    cursor: pointer;
-    margin: auto auto;
-    width: 90%;
+  cursor: pointer;
+  margin: auto auto;
+  width: 90%;
 
 }
 
 .card-panel-icon {
-    height: 100px;
-    width: 100px;
+  height: 100px;
+  width: 100px;
 
-    color: #C63D2F;
-    padding: 20px;
+  color: #C63D2F;
+  padding: 20px;
 }
 
 .card-content {
 
-    display: grid;
-    grid-template-columns: 1fr;
+  display: grid;
+  grid-template-columns: 1fr;
 }
 
 .content-title {
-    text-align: center;
+  text-align: center;
 }
 
 .content-title h4 {
-    text-transform: uppercase;
-    color: #9fbfa0cc;
+  text-transform: uppercase;
+  color: #9fbfa0cc;
 }
 
 .content-title .most-locale {
-    text-transform: capitalize;
-    font-weight: bold;
-    color: #4a6e669a
+  text-transform: capitalize;
+  font-weight: bold;
+  color: #4a6e669a
 }
 
 .content-stat {
-    text-align: center;
+  text-align: center;
 }
 
 .count-text {
-    font-size: 20px;
+  font-size: 20px;
 }
 </style>

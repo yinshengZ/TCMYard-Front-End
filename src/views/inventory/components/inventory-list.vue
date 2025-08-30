@@ -18,6 +18,18 @@
       <update-inventory :key="key" :inventory_id="inventory_id" />
     </el-dialog>
 
+    <el-dialog title="Add Inventory Stocks" :visible.sync="add_inventory_stock_form_visible">
+      <add-inventory-stock :key="key" :inventory_id="inventory_id"></add-inventory-stock>
+    </el-dialog>
+
+    <el-dialog title="Update Inventory Stocks" :visible.sync="update_inventory_stock_form_visible">
+      <update-inventory-stock :key="key" :inventory_id="inventory_id"></update-inventory-stock>
+    </el-dialog>
+
+    <el-dialog title="Add Inventory SKU" :visible.sync="add_inventory_sku_form_visible">
+      <add-inventory-sku :key="key" :inventory_id="inventory_id"></add-inventory-sku>
+    </el-dialog>
+
     <el-tabs type="border-card">
       <el-tab-pane>
         <!--herbs data table-->
@@ -41,7 +53,7 @@
               <span>{{ row.eng_name | capitalize }}</span>
             </template>
           </el-table-column>
-
+          <!-- 
           <el-table-column label="Stock" width="100">
             <template slot-scope="{ row }">
               <span>{{ row.stock }}</span>
@@ -61,7 +73,7 @@
               <span v-if="row.expiry_date == null">No Date Set</span>
               <span v-else>{{ convert_date(row.expiry_date) }}</span>
             </template>
-          </el-table-column>
+          </el-table-column> -->
 
           <el-table-column label="Last Updated" width="140">
             <template slot-scope="{ row }">
@@ -71,9 +83,24 @@
 
           <el-table-column label="Operations" width="220">
             <template slot-scope="{row}">
-              <el-button type="primary" @click="load_update_inventory_form(row.id)"> Update </el-button>
+              <el-tooltip effect="dark" content="Update Inventory" placement="top">
+                <el-button type="primary" icon="el-icon-edit" @click="load_update_inventory_form(row.id)" circle>
+                </el-button>
+              </el-tooltip>
 
-              <el-button type="danger" @click="delete_inventory(row.id)"> Delete </el-button>
+              <el-tooltip effect="dark" content="Add New SKU" placement="top">
+                <el-button type="success" icon="el-icon-document-add" @click="load_add_inventory_sku_form(row.id)"
+                  circle></el-button>
+              </el-tooltip>
+
+              <el-tooltip effect="dark" content="Add Stocks" placement="top">
+                <el-button type="success" icon="el-icon-document-add" @click="load_add_inventory_stock_form(row.id)"
+                  circle></el-button>
+              </el-tooltip>
+
+              <el-tooltip effect="dark" content="Delete Inventory" placement="top">
+                <el-button type="danger" icon="el-icon-delete" @click="delete_inventory(row.id)" circle></el-button>
+              </el-tooltip>
             </template>
           </el-table-column>
 
@@ -114,7 +141,7 @@
               <span>{{ row.eng_name }}</span>
             </template>
           </el-table-column>
-
+          <!-- 
           <el-table-column label="Stock" width="100">
             <template slot-scope="{ row }">
               <span>{{ row.stock }}</span>
@@ -134,7 +161,7 @@
               <span v-if="row.expiry_date == null">No Date Set</span>
               <span v-else>{{ convert_date(row.expiry_date) }}</span>
             </template>
-          </el-table-column>
+          </el-table-column> -->
 
           <el-table-column label="Last Updated" width="140">
             <template slot-scope="{ row }">
@@ -191,7 +218,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column label="Stock" width="100">
+          <!--  <el-table-column label="Stock" width="100">
             <template slot-scope="{ row }">
               <span>{{ row.stock }}</span>
             </template>
@@ -210,7 +237,7 @@
               <span v-if="row.expiry_date == null">No Date Set</span>
               <span v-else>{{ convert_date(row.expiry_date) }}</span>
             </template>
-          </el-table-column>
+          </el-table-column> -->
 
           <el-table-column label="Last Updated" width="140">
             <template slot-scope="{ row }">
@@ -272,7 +299,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column label="Unit Price" width="100" align="center">
+          <!-- <el-table-column label="Unit Price" width="100" align="center">
             <template slot-scope="{row}">
               <span>
                 {{ row.unit_price }}
@@ -285,7 +312,7 @@
               <span v-if="row.expiry_date == null">No Date Set</span>
               <span v-else>{{ convert_date(row.expiry_date) }}</span>
             </template>
-          </el-table-column>
+          </el-table-column> -->
 
           <el-table-column label="Last Updated" width="140">
             <template slot-scope="{ row }">
@@ -328,7 +355,9 @@ import { get_herbs, get_retails, get_others, get_services, delete_item } from '@
 
 import AddItem from './add-item'
 import UpdateInventory from './update-inventory-form'
-
+import AddInventoryStock from './add-inventory-stock.vue'
+import UpdateInventoryStock from './update-inventory-stock.vue'
+import addInventorySku from './add-inventory-sku.vue'
 export default {
   filters: {
     capitalize: function (value) {
@@ -337,7 +366,7 @@ export default {
       return value.charAt(0).toUpperCase() + value.slice(1)
     }
   },
-  components: { AddItem, UpdateInventory },
+  components: { AddItem, UpdateInventory, AddInventoryStock, UpdateInventoryStock, addInventorySku },
   data() {
     return {
       herbs: [],
@@ -348,6 +377,9 @@ export default {
       search: '',
       add_inventory_form_visible: false,
       update_inventory_form_visible: false,
+      add_inventory_stock_form_visible: false,
+      add_inventory_sku_form_visible: false,
+
       inventory_id: '',
       key: '',
       page_size: 10,
@@ -390,6 +422,8 @@ export default {
       this.get_others()
       this.add_inventory_form_visible = false,
         this.update_inventory_form_visible = false
+      this.add_inventory_stock_form_visible = false
+      this.add_inventory_sku_form_visible = false
     },
 
     set_page(val) {
@@ -427,17 +461,27 @@ export default {
       this.add_inventory_form_visible = true
       this.key += 1
     },
+    load_add_inventory_stock_form(id) {
+      this.inventory_id = id
+      this.add_inventory_stock_form_visible = true
+      this.key += 1
+    },
 
     load_update_inventory_form(id) {
       this.inventory_id = id
       this.update_inventory_form_visible = true
       this.key += 1
     },
+    load_add_inventory_sku_form(id) {
+      this.inventory_id = id
+      this.add_inventory_sku_form_visible = true
+      this.key += 1
+    },
 
-    delete_inventory($id) {
+    delete_inventory(id) {
       var consent = confirm('Are you sure you want to delete this inventory?')
       if (consent) {
-        delete_item($id).then((response) => {
+        delete_item(id).then((response) => {
           this.get_inventories()
           this.$notify({
             title: 'Notification',

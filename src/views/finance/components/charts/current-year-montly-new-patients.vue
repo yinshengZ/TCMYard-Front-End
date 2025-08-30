@@ -40,13 +40,13 @@ export default {
         if (Array.isArray(response.data)) {
 
           response.data.forEach((data, index) => {
-            this.xAxis[index] = data.date
+            this.xAxis[index] = data.short_month
             this.yAxis[index] = data.count
           })
 
           this.initChart()
         } else {
-          this.no_data = "<h1>" + response.data + "</h1>"
+          this.no_data = "<h5>"+response.data+"</h5>"
         }
 
       })
@@ -74,7 +74,7 @@ export default {
         },
         tooltip: {
           trigger: 'item',
-          formatter: '{a} <br/> {b}: {c} <span>patients</span>'
+          formatter: '{a} <br/> {b}: {c} <span> new patients</span>'
         },
         legend: {
           left: 'center',

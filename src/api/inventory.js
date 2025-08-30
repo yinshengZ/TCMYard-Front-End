@@ -29,6 +29,21 @@ export function get_single(data) {
   });
 }
 
+export function add_inventory_stock(data) {
+  return request({
+    url: "/inventory/stocking",
+    method: "post",
+    data,
+  });
+}
+
+export function get_stock(id) {
+  return request({
+    url: "/inventory/usage/" + id,
+    method: "get",
+  });
+}
+
 export function get_herbs() {
   return request({
     url: "/inventory/herb",

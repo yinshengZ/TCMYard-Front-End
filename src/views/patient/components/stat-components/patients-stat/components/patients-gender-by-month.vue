@@ -23,7 +23,7 @@
         <div class="content-row">
             <div class="data-table">
                 <div class="table">
-                    <el-table :data="patients">
+                    <el-table :data="patients" size="mini" style="min-height:450px">
                         <el-table-column label="Month">
                             <template slot-scope="{row}">
                                 <div>
@@ -45,8 +45,9 @@
                 </div>
             </div>
 
+
             <div class="chart-area">
-                <div class="chart" id="gender_by_year_chart">
+                <div class="chart" id="gender_trend_by_month_chart">
                 </div>
             </div>
         </div>
@@ -77,6 +78,7 @@ export default {
                 count: []
             },
 
+
         }
     },
     mounted() {
@@ -95,6 +97,9 @@ export default {
         patients() {
             this.construct_chart_data()
         },
+        window_width() {
+
+        }
 
 
     },
@@ -132,11 +137,10 @@ export default {
         },
 
         initChart() {
-            echarts.init(document.getElementById('gender_by_year_chart')).dispose()
+            echarts.init(document.getElementById('gender_trend_by_month_chart')).dispose()
 
-            let chart = echarts.init(document.getElementById('gender_by_year_chart'), 'macarons')
+            let chart = echarts.init(document.getElementById('gender_trend_by_month_chart'), 'macarons')
 
-            console.log(chart)
             let option = {
                 title: {
                     show: true,
@@ -181,6 +185,10 @@ export default {
             chart.setOption(option);
             chart.resize()
 
+        },
+
+        chart_resize() {
+            this.chart.resize()
         }
 
     }
@@ -211,7 +219,7 @@ export default {
 
 .content-row {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 0.2fr 1.8fr;
     column-gap: 3%;
 
     .chart-area {

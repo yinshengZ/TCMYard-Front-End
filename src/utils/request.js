@@ -14,13 +14,13 @@ const service = axios.create({
 service.interceptors.request.use(
   (config) => {
     // do something before request is sent
-
     if (store.getters.token) {
       // let each request carry token
       // ['X-Token'] is a custom headers key
       // please modify it according to the actual situation
 
       config.headers["Authorization"] = "Bearer " + getToken();
+      config.headers["Accept"] = "application/json";
     }
 
     return config;
@@ -45,23 +45,44 @@ service.interceptors.response.use(
    * You can also judge the status by HTTP Status Code
    */
   (response) => {
-    const res = response.data;
+    const res = response;
 
+    //return console.log(res);
     // if the custom code is not 20000, it is judged as an error.
-    if (res.code !== 200) {
-      console.log(response);
-      Message({
-        message: res.message || "Error",
-        type: "error",
-        duration: 5 * 1000,
-      });
-
-      if(res.code ===403){
+    if (res.status !== 200) {
+      if (res.status === 403) {
         Message({
-          message:res.message||"Error",
-          type:'error',
-          duration:5*1000,
-        })
+          message: res.message || "Error",
+          type: "error",
+          duration: 5 * 1000,
+        });
+      }
+
+      //unprocessable content
+      if (res.status === 422) {
+        Message({
+          message: res.message || "Error",
+          type: "error",
+          duration: 5 * 1000,
+        });
+      }
+
+      //requirements not met
+      if (res.code === 90001) {
+        Message({
+          message: res.data,
+          type: "error",
+          duration: 5 * 1000,
+        });
+      }
+
+      //refund unsucessful
+      if (res.code === 90002) {
+        Message({
+          message: res.data,
+          type: "error",
+          duration: 5 * 1000,
+        });
       }
 
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
@@ -81,15 +102,21 @@ service.interceptors.response.use(
           });
         });
       }
+      /*  Message({
+        message: res.message || "Error",
+        type: "error",
+        duration: 5 * 1000,
+      }); */
       return Promise.reject(new Error(res || "Error"));
     } else {
-      return res;
+      // return data with user info
+      return res.data;
     }
   },
   (error) => {
-    console.log("error message:" + error); // for debug
+    console.log("error message: ${error}" + error); // for debug
     Message({
-      message: error.message,
+      message: error.response.data.message,
       type: "error",
       duration: 5 * 1000,
     });

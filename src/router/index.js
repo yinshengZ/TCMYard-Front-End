@@ -206,6 +206,31 @@ export const constantRoutes = [
     ],
   },
 
+  {
+    path: "/user",
+    component: Layout,
+    name: "User",
+    meta: {
+      title: "User",
+      icon: "user",
+    },
+    children: [
+      {
+        path: "overview",
+        name: "Overview",
+        component: () => import("@/views/user/index.vue"),
+        meta: { title: "Overview", icon: "user", affix: true },
+      },
+
+      {
+        path: "manage",
+        name: "Manage",
+        component: () => import("@/views/user/user-list.vue"),
+        meta: { title: "Manage", icon: "el-icon-document", affix: true },
+      },
+    ],
+  },
+
   /*   {
     path:'/service',
     component:Layout,

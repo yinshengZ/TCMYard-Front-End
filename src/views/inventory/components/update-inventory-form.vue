@@ -1,11 +1,6 @@
 <template>
   <div>
-    <el-form
-      ref="update_inventory_form"
-      :model="inventory_details"
-      label-position="left"
-      label-width="120px"
-    >
+    <el-form ref="update_inventory_form" :model="inventory_details" label-position="left" label-width="120px">
       <el-form-item label="ID">
         <el-input v-model="inventory_details.id" :disabled="true" />
       </el-form-item>
@@ -20,24 +15,13 @@
 
       <el-form-item label="Category">
         <el-select v-model="inventory_details.categories_id" placeholder="select...">
-          <el-option
-            v-for="categories in categories_rtv"
-            :key="categories.id"
-            :label="categories.categories"
-            :value="categories.id"
-            class="capitalize"
-          />
+          <el-option v-for="categories in categories_rtv" :key="categories.id" :label="categories.categories"
+            :value="categories.id" class="capitalize" />
         </el-select>
       </el-form-item>
 
-      <el-form-item
-        label="Unit Price"
-      >
+      <el-form-item label="Unit Price">
         <el-input-number v-model="inventory_details.unit_price" :precison="2" :step="0.1" :max="999999" />
-      </el-form-item>
-
-      <el-form-item label="Stock">
-        <el-input v-model="inventory_details.stock" />
       </el-form-item>
 
       <el-form-item label="Description">
@@ -45,20 +29,12 @@
       </el-form-item>
 
       <el-form-item label="Expiry Date">
-        <el-date-picker
-          v-model="updated_expiry_date"
-          type="date"
-          format="yyyy/MM/dd"
-          value-format="yyyy/MM/dd"
-          :placeholder="inventory_details.expiry_date"
-        />
+        <el-date-picker v-model="updated_expiry_date" type="date" format="yyyy/MM/dd" value-format="yyyy/MM/dd"
+          :placeholder="inventory_details.expiry_date" />
       </el-form-item>
 
       <el-form-item>
-        <el-button
-          type="primary"
-          @click="update_inventory_details"
-        >Update</el-button>
+        <el-button type="primary" @click="update_inventory_details">Update</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -94,8 +70,8 @@ export default {
     },
     get_inventory_details() {
       get_single(this.inventory_id).then((response) => {
-        console.log(this.inventory_id)
-        console.log(response)
+        /* console.log(this.inventory_id)
+        console.log(response) */
         this.inventory_details = response.data
       })
     },
@@ -124,7 +100,7 @@ export default {
 </script>
 
 <style scoped>
-.capitalize{
+.capitalize {
   text-transform: capitalize;
 }
 </style>

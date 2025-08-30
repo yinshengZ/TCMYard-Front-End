@@ -27,13 +27,16 @@
     <div class="chart-area">
       <el-tabs type="card">
         <el-tab-pane label="Patients">
-          <div id="new-patients-line-chart">
+          <div id="new-patients-line-chart" lazy>
             <new-patients-line-chart />
           </div>
         </el-tab-pane>
 
-        <el-tab-pane label="Genders">
-          <p>hello chart 2</p>
+        <el-tab-pane label="Genders" lazy>
+          <patients-gender-table></patients-gender-table>
+        </el-tab-pane>
+        <el-tab-pane label="Statistics" lazy>
+          <patient-stats></patient-stats>
         </el-tab-pane>
       </el-tabs>
 
@@ -46,10 +49,11 @@
 import NewPatients from './components/stat-components/new-patients.vue'
 import patientsGender from './components/stat-components/patients-gender.vue'
 import PatientsLocale from './components/stat-components/patients-locale.vue'
-import TestApi from './components/stat-components/test-api.vue'
+import PatientsGenderTable from './components/stat-components/patients-stat/components/patients-gender.vue'
 import AverageSpending from './components/stat-components/average-spending.vue'
 import NewPatientsTable from './components/data-tables/new-patients.vue'
 import NewPatientsLineChart from './components/charts/new-patients-line-chart.vue'
+import PatientStats from './components/stat-components/patients-stat/index.vue'
 export default {
   components: {
 
@@ -58,8 +62,10 @@ export default {
     PatientsLocale,
     AverageSpending,
     NewPatientsTable,
-    TestApi,
-    NewPatientsLineChart
+
+    NewPatientsLineChart,
+    PatientStats,
+    PatientsGenderTable
 
   },
 
@@ -100,9 +106,6 @@ export default {
     grid-template-columns: 1fr;
   }
 
-  #new-patients-line-chart {
-    width: 400px;
-    height: 400px;
-  }
+  #new-patients-line-chart {}
 }
 </style>

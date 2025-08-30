@@ -1,260 +1,295 @@
-import request from '@/utils/request'
+import request from "@/utils/request";
 
 export function searchPatient(data) {
   return request({
-    url: '/patient/search',
-    method: 'post',
-    data
-  })
+    url: "/patient/search",
+    method: "post",
+    data,
+  });
 }
 export function getAll() {
   return request({
-    url: '/patient',
-    method: 'get'
-  })
+    url: "/patient",
+    method: "get",
+  });
 }
 
-export function getSimplePatientList(){
+export function getSimplePatientList() {
   return request({
-    url:'/patient/basic_list',
-    method:'get'
-  })
+    url: "/patient/basic_list",
+    method: "get",
+  });
 }
 
 export function getSingle(id) {
   return request({
-    url: '/patient/' + id,
-    method: 'get'
-  })
+    url: "/patient/" + id,
+    method: "get",
+  });
 }
 
 export function getPatientInfo(id) {
   return request({
-    url: '/patient/info/' + id,
-    method: 'get'
-  })
+    url: "/patient/info/" + id,
+    method: "get",
+  });
+}
+
+export function getPatientYears() {
+  return request({
+    url: "/patient/stat/years",
+    method: "get",
+  });
+}
+
+export function getPatientGendersByYear(year) {
+  return request({
+    url: "/patient/stat/gender/year/" + year,
+    method: "get",
+  });
+}
+
+export function getYearlyPatientsCountByGender(gender) {
+  return request({
+    url: "/patient/stat/gender/yearly/id/" + gender,
+    method: "get",
+  });
+}
+
+export function getPateintsByGenderYear(gender, year) {
+  return request({
+    url: "/patient/stat/gender/" + gender + "/" + year,
+    method: "get",
+  });
+}
+
+export function getPatientGendersListByYear(year) {
+  return request({
+    url: "/patient/stat/gender/list/" + year,
+    method: "get",
+  });
 }
 
 export function getCurrentMonthNewPatients() {
   return request({
-    url: '/patient/new/month',
-    method: 'get'
-  })
+    url: "/patient/new/month",
+    method: "get",
+  });
 }
 
 export function getNewestPatients(number) {
   return request({
-    url: '/patient/new/custom/' + number,
-    method: 'get'
-  })
+    url: "/patient/new/custom/" + number,
+    method: "get",
+  });
 }
 
 export function getCurrentYearMonthlyNewPatients() {
   return request({
-    url: '/patient/stat/patient/current_year',
-    method: 'get'
-  })
+    url: "/patient/stat/patient/current_year",
+    method: "get",
+  });
 }
 
 export function getMostPatientsGender() {
   return request({
-    url: '/patient/stat/gender',
-    method: 'get'
-  })
+    url: "/patient/stat/gender",
+    method: "get",
+  });
 }
 
 export function getMostPatientsLocale() {
   return request({
-    url: '/patient/stat/locale',
-    method: 'get'
-  })
+    url: "/patient/stat/locale",
+    method: "get",
+  });
 }
 
 export function getPatientAverageSpending() {
   return request({
-    url: '/patient/stat/average_spending',
-    method: 'get'
-  })
+    url: "/patient/stat/average_spending",
+    method: "get",
+  });
 }
 
 export function AddPatient(data) {
   return request({
-    url: '/patient',
-    method: 'post',
-    data
-  })
+    url: "/patient",
+    method: "post",
+    data,
+  });
 }
 
 export function updatePatient(data, id) {
   return request({
-    url: '/patient/' + id,
-    method: 'put',
-    data
-  })
+    url: "/patient/" + id,
+    method: "put",
+    data,
+  });
 }
 
 export function deletePatient(data) {
   return request({
-    url: '/patient/' + data,
-    method: 'delete'
-  })
+    url: "/patient/" + data,
+    method: "delete",
+  });
 }
 
 export function addGender(data) {
   return request({
-    url: '/gender',
-    method: 'post',
-    data
-  })
+    url: "/gender",
+    method: "post",
+    data,
+  });
 }
 
 export function getGenders() {
   return request({
-    url: '/gender',
-    method: 'get'
-  })
+    url: "/gender",
+    method: "get",
+  });
 }
 
 export function deleteGender(id) {
   return request({
-    url: '/gender',
-    method: 'delete',
-    id
-  })
+    url: "/gender",
+    method: "delete",
+    id,
+  });
 }
 
 export function addMarital(data) {
   return request({
-    url: '/marital',
-    method: 'post',
-    data
-  })
+    url: "/marital",
+    method: "post",
+    data,
+  });
 }
 
 export function getMarital() {
   return request({
-    url: '/marital',
-    method: 'get'
-  })
+    url: "/marital",
+    method: "get",
+  });
 }
 
 export function deleteMarital(id) {
   return request({
-    url: '/marital',
-    method: 'delete',
-    id
-  })
+    url: "/marital",
+    method: "delete",
+    id,
+  });
 }
 
 export function addAllergies(data) {
   return request({
-    url: '/allergy',
-    method: 'post',
-    data
-  })
+    url: "/allergy",
+    method: "post",
+    data,
+  });
 }
 
 export function getAllergies() {
   return request({
-    url: '/allergy',
-    method: 'get'
-  })
+    url: "/allergy",
+    method: "get",
+  });
 }
 
 export function deleteAllergies(id) {
   return request({
-    url: '/allergy',
-    method: 'delete',
-    id
-  })
+    url: "/allergy",
+    method: "delete",
+    id,
+  });
 }
 
 export function addSymptoms(data) {
   return request({
-    url: '/symptom',
-    method: 'post',
-    data
-  })
+    url: "/symptom",
+    method: "post",
+    data,
+  });
 }
 
 export function getSymptoms() {
   return request({
-    url: '/symptom',
-    method: 'get'
-  })
+    url: "/symptom",
+    method: "get",
+  });
 }
 
 export function deleteSymptoms(id) {
   return request({
-    url: '/symptom',
-    method: 'delete',
-    id
-  })
+    url: "/symptom",
+    method: "delete",
+    id,
+  });
 }
 
 export function addPatientDisease(data) {
   return request({
-    url: '/patient/disease/tag',
-    method: 'post',
-    data
-  })
+    url: "/patient/disease/tag",
+    method: "post",
+    data,
+  });
 }
 
 export function addPatientAllergy(data) {
   return request({
-    url: '/patient/allergy/tag',
-    method: 'post',
-    data
-  })
+    url: "/patient/allergy/tag",
+    method: "post",
+    data,
+  });
 }
 
 export function addPatientSymptom(data) {
   return request({
-    url: '/patient/symptom/tag',
-    method: 'post',
-    data
-  })
+    url: "/patient/symptom/tag",
+    method: "post",
+    data,
+  });
 }
 
 export function addPatientMedication(data) {
   return request({
-    url: '/patient/medication/tag',
-    method: 'post',
-    data
-  })
+    url: "/patient/medication/tag",
+    method: "post",
+    data,
+  });
 }
 
 export function deletePatientDisease(patient_id, disease_id) {
   return request({
-    url: '/patient/disease/' + patient_id + '/' + disease_id,
-    method: 'delete'
-  })
+    url: "/patient/disease/" + patient_id + "/" + disease_id,
+    method: "delete",
+  });
 }
 
 export function deletePatientSymptom(patient_id, symptom_id) {
   return request({
-    url: '/patient/symptom/' + patient_id + '/' + symptom_id,
-    method: 'delete'
-  })
+    url: "/patient/symptom/" + patient_id + "/" + symptom_id,
+    method: "delete",
+  });
 }
 
 export function deletePatientMedication(patient_id, medication_id) {
   return request({
-    url: '/patient/medication/' + patient_id + '/' + medication_id,
-    method: 'delete'
-  })
+    url: "/patient/medication/" + patient_id + "/" + medication_id,
+    method: "delete",
+  });
 }
 
 export function deletePatientAllergy(patient_id, allergy_id) {
   return request({
-    url: '/patient/allergy/' + patient_id + '/' + allergy_id,
-    method: 'delete'
-  })
+    url: "/patient/allergy/" + patient_id + "/" + allergy_id,
+    method: "delete",
+  });
 }
 
-export function getPatientTreatmentStats(number_to_get){
+export function getPatientTreatmentStats(number_to_get) {
   return request({
-    url:'/patient/stat/treatments/'+number_to_get,
-    method:'get'
-  })
+    url: "/patient/stat/treatments/" + number_to_get,
+    method: "get",
+  });
 }
